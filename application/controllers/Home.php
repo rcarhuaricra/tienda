@@ -41,9 +41,9 @@ class Home extends CI_Controller {
 
         $sesion = array(
             'nombre' => $data->NOMBRES,
-            'apellidos' => $data->APELLIDO_PAT .' '. $data->APELLIDO_MAT,
+            'apellidos' => $data->APELLIDO_PATERNO .' '. $data->APELLIDO_MATERNO,
             'email' => $data->EMAIL,
-            'rol'=>$data->ROL_NOMBRE,
+            'rol'=>$data->TXT_TIPO_PERSONA,
             'logged' => TRUE
         );
         $this->session->set_userdata($sesion);

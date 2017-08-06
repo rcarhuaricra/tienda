@@ -8,7 +8,7 @@ class logingmodel extends CI_Model {
     }
 
     public function verificarEmailModel($email) {
-        $sql = "SELECT * FROM `usuario` U WHERE U.`EMAIL`='$email'";
+        $sql = "SELECT * FROM `persona` P WHERE P.EMAIL='$email'";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             return TRUE;
@@ -18,7 +18,7 @@ class logingmodel extends CI_Model {
     }
 
     public function verificarPasswordModel($email, $password) {
-        $sql = "SELECT * FROM `usuario` U WHERE U.`EMAIL`='$email' AND U.`PASSWORD`='$password'";
+        $sql = "SELECT * FROM `persona` P WHERE P.`EMAIL`='$email' AND P.`PASSWORD`='$password'";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             return TRUE;
@@ -28,10 +28,10 @@ class logingmodel extends CI_Model {
     }
 
     public function llamarDatos($email, $password) {
-        $sql = "  SELECT * FROM `usuario` U 
-  INNER JOIN `tipo_documento` TD ON U.`ID_TIPO_DOCUMENTO`=TD.`ID_TIPO_DOCUMENTO`
-  INNER JOIN `roles` R ON U.`ID_ROL`=R.`ID_ROL`
-  WHERE U.`EMAIL`='$email' AND U.`PASSWORD`='$password'";
+        $sql = "SELECT * FROM `persona` P 
+INNER JOIN `tipo_documento` TD ON P.`ID_TIPO_DOCUMENTO`=TD.`ID_TIPO_DOCUMENTO`
+INNER JOIN `tipo_persona` TP ON P.`ID_TIPO_PERSONA`=TP.`ID_TIPO_PERSONA`
+WHERE P.EMAIL='$email' AND P.`PASSWORD`='$password' LIMIT 1";
         $query = $this->db->query($sql);
         return $query->row();
     }

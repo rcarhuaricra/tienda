@@ -86,7 +86,14 @@ defined('EXIT__AUTO_MIN') OR define('EXIT__AUTO_MIN', 9); // lowest automaticall
 defined('EXIT__AUTO_MAX') OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-
 /* DEFINICIONES DE SISTEMA */
 define('TIENDA', 'La 44');
+/* DEFINICIONES DE SISTEMA */
+define('ADMINISTRADOR', '1');
+define('VENDEDOR', '2');
+define('ALMACEN', '3');
+define('PROVEEDOR', '4');
+define('CLIENTE', '5');
+define('DNI', '1');
+define('RUC', '2');
 

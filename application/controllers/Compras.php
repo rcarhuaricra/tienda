@@ -14,7 +14,7 @@ class Compras extends CI_Controller {
     }
 
     public function historial() {
-        $data['titulo'] = 'Historial de COmpras';
+        $data['titulo'] = 'Historial de Compras';
         $data['iCheck'] = TRUE;
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');

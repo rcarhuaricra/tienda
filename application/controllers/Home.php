@@ -40,6 +40,7 @@ class Home extends CI_Controller {
         $data = $this->LogingModel->llamarDatos($email, $password);
 
         $sesion = array(
+            'user' => $data->USER,
             'nombre' => $data->NOMBRES,
             'apellidos' => $data->APELLIDO_PATERNO .' '. $data->APELLIDO_MATERNO,
             'email' => $data->EMAIL,

@@ -25,6 +25,8 @@ $urlactual = "http://" . $host . $url;
         <ul class="sidebar-menu">
             <li class="header">MENÚ</li>
             <?php
+            $principal = substr($this->uri->slash_segment(1), 0, -1);
+            $secundario = substr($this->uri->slash_segment(2), 0, -1);
             $menu = $this->menu->menu();
             foreach ($menu as $value) {
 
@@ -32,8 +34,8 @@ $urlactual = "http://" . $host . $url;
                     ?>
                     <li class="treeview 
                     <?php
-                    if ($value->id == $this->menu->submenu($value->id)->row()->parent) {
-                        echo ' ';
+                    if ($value->slug==$principal) {
+                        echo ' active';
                     }
                     ?>">
                         <a href="#">
@@ -53,40 +55,40 @@ $urlactual = "http://" . $host . $url;
                                 ?>
                                 <li class="treeview
                                 <?php
-                                if (strtoupper(substr($url, -strlen($submenu->slug))) == strtoupper($submenu->slug)) {
+                                if ($submenu->slug == $principal."/".$secundario) {
                                     echo ' active';
                                 }
                                 ?>">
                                     <a href="<?php echo base_url() . $submenu->slug; ?>">
                                         <i class="<?php echo $submenu->icon; ?>"></i>
                                         <span> <?php
-                        echo $submenu->name;
-                                ?></span>
+                                            echo $submenu->name;
+                                            ?></span>
                                     </a>
                                 </li>
-            <?php
-        }
-        ?>
+                                <?php
+                            }
+                            ?>
 
                         </ul>
                     </li>
 
-        <?php
-    } else {
-        ?>
+                    <?php
+                } else {
+                    ?>
                     <li id="menu" class="treeview <?php
-                    if (substr($url, 8) == $value->slug) {
-                        echo 'active';
-                    }
-                    ?>">
+                        if (substr($url, 8) == $value->slug) {
+                            echo 'active';
+                        }
+                        ?>">
                         <a href="<?php echo base_url() . $value->slug; ?>">
                             <i class="<?php echo $value->icon; ?>"></i> <span><?php echo $value->name; ?></span>
                         </a>
                     </li>
-        <?php
-    }
-}
-?>
+                    <?php
+                }
+            }
+            ?>
         </ul>
     </section>
     <!-- /.sidebar -->

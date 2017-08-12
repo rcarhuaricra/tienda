@@ -15,7 +15,7 @@ class Facturacion extends CI_Controller {
 
     public function administrar() {
         $data['titulo'] = 'Historial de COmpras';
-        $data['iCheck'] = TRUE;
+        $data['iCheck'] = TRUE;        
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);

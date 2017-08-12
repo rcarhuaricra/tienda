@@ -15,6 +15,7 @@ class Contactos extends CI_Controller {
     }
 
     public function clientes() {
+        
         $data['titulo'] = 'Clientes';
 
         $this->load->view('plantilla/header', $data);
@@ -46,7 +47,8 @@ class Contactos extends CI_Controller {
         echo $guardo = $this->personas->GuardaClienteModel($insertCliente);
     }
 
-    public function validarDocumento($tipopersona) {
+    public function validarDocumento() {
+        $tipopersona='5';
         $documento = $this->input->post('documento');
         echo $this->personas->validarDocumentomodel($documento, $tipopersona);
     }

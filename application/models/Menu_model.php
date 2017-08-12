@@ -15,7 +15,7 @@ class Menu_model extends CI_Model {
 
     public function submenu($id) {
 
-        $sql = "SELECT * FROM `menus` WHERE `parent` = '$id'";
+        $sql = "SELECT * FROM `menus` M WHERE M.`parent` = '$id' ORDER BY M.`number` ASC";
         $query = $this->db->query($sql);
         return $query;
     }

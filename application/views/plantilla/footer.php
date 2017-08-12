@@ -9,13 +9,13 @@ if (isset($iCheck)) {
     <!-- iCheck -->
     <script src="<?php echo base_url(); ?>recursos/plugins/iCheck/icheck.min.js"></script>
     <script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
         });
-    });
     </script>
     <?php
 }
@@ -59,7 +59,15 @@ if (isset($dashboard)) {
     <script src="<?php echo base_url(); ?>recursos/dist/js/pages/dashboard.js"></script>
     <?php
 }
+if (isset($fileInput)) {
+    ?>
+    <!-- bootstrap_fileInput - text editor -->
+    
+    
+    <?php
+}
 ?>
+
 <!-- Sparkline -->
 <script src="<?php echo base_url(); ?>recursos/plugins/sparkline/jquery.sparkline.min.js"></script>
 <!-- jQuery Knob Chart -->

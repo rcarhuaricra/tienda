@@ -21,7 +21,10 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/dist/css/skins/_all-skins.min.css">
-
+<!-- jQuery 2.2.3 -->
+        <script src="<?php echo base_url(); ?>recursos/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <?php
         if (isset($iCheck)) {
             ?>
@@ -60,6 +63,14 @@
             <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
             <?php
         }
+        if (isset($fileInput)) {
+            ?>
+            <!-- bootstrap_fileInput - text editor -->
+            <link href="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
+            <script src="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
+            <script src="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/js/fileinput.min.js" type="text/javascript"></script>
+            <?php
+        }
         ?>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,14 +78,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <!-- jQuery 2.2.3 -->
-        <script src="<?php echo base_url(); ?>recursos/plugins/jQuery/jquery-2.2.3.min.js"></script>
-        <!-- jQuery UI 1.11.4 -->
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>
-            $.widget.bridge('uibutton', $.ui.button);
-        </script>
+        <script src="<?php echo base_url(); ?>recursos/plugins/autocomplete/typeahead.js" type="text/javascript"></script>
+
     </head>
     <?php
     if (isset($tipo)) {
@@ -92,7 +99,7 @@
 
         function cabecera() {
             ?>
-            
+
             <section class="content-header">
                 <h1>
                     <?php
@@ -113,7 +120,6 @@
                     </li>
                 </ol>
             </section>
-            <?php 
-            
+            <?php
         }
         ?>

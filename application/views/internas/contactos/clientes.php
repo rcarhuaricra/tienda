@@ -1,5 +1,7 @@
+
 <div class="content-wrapper">
-    <?php cabecera(); ?>
+    <?php cabecera();
+    ?>
     <section class="content">
         <div class="row">
             <section class="col-lg-12 connectedSortable">
@@ -57,7 +59,7 @@
                 <h4 class="modal-title">Agregar Nuevo Cliente</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="guardarNuevoCliente">
+                <form class="form-horizontal" id="guardarNuevoCliente" id="guardarNuevoCliente" autocomplete="off">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="tipoDocumento" class="col-sm-4 control-label">Tipo de Documento</label>
@@ -80,38 +82,40 @@
                             <div id="xDocumento" class="hide panel-body text-right"><strong class="text-danger"></strong></div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="divnombre">
                             <label for="nombres" class="col-sm-4 control-label ">Nombres o Razón Social</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="nombres" name="nombres" placeholder="Nombres o Razón Social" required disabled/>
+                                <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres o Razón Social"  disabled/>
+                                <span class="help-block text-right hidden" id="msjnombres"></span>
                             </div>
+                            
                         </div>
 
                         <div class="form-group">
                             <label for="apellidoPaterno" class="col-sm-4 control-label ">Apellido Paterno</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="apellidoPaterno" name="apellidoPaterno" placeholder="Apellido Paterno" required disabled/>
+                                <input type="text" class="form-control solo-texto" id="apellidoPaterno" name="apellidoPaterno" placeholder="Apellido Paterno"  disabled/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="apellidoMaterno" class="col-sm-4 control-label">Apellido Materno</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="apellidoMaterno" name="apellidoMaterno" placeholder="Apellido Materno" required disabled />
+                                <input type="text" class="form-control solo-texto" id="apellidoMaterno" name="apellidoMaterno" placeholder="Apellido Materno"  disabled />
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="celular" class="col-sm-4 control-label">Célular</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control solo-numero" id="celular" name="celular" placeholder="Celular" required disabled/>
+                                <input type="text" class="form-control solo-numero" id="celular" name="celular" placeholder="Celular"  disabled/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">E-mail</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" data-validation="email" required  disabled/>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" data-validation="email"   disabled/>
                             </div>
                             <div id="xmail" class="hide panel-body text-right"><strong class="text-danger">Ingresa un email valido</strong></div>
                         </div>
@@ -119,13 +123,13 @@
                         <div class="form-group">
                             <label for="direccion" class="col-sm-4 control-label">Dirección</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control texto-limpio" id="direccion" name="direccion" placeholder="Dirección" required disabled/>
+                                <input type="text" class="form-control texto-limpio" id="direccion" name="direccion" placeholder="Dirección"  disabled/>
                             </div>
                         </div>
                     </div>
                     <div class="box-footer">
                         <button type="button" id="btnCerrarModal" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" id="btnguardarNuevoCliente" class="btn btn-primary pull-right" disabled>Guardar</button>
+                        <button type="submit" id="btnguardarNuevoCliente" class="btn btn-primary pull-right" >Guardar</button>
                     </div>
                 </form>
             </div>
@@ -152,13 +156,12 @@
             $.ajax({
                 cache: false,
                 type: 'post',
-                url: "<?php echo base_url(); ?>contactos/validarDocumento/5",
+                url: "<?php echo base_url(); ?>contactos/validarDocumento",
                 data: {documento: documento},
                 success: function (response) {
                     console.log(response);
                     if (response === '') {
                         $(div).hide().addClass('hide').slideDown('slow');
-
                         $('#nombres').removeAttr('disabled');
                         $('#nombres').focus();
                         $('#apellidoPaterno').removeAttr('disabled');
@@ -199,44 +202,124 @@
         }
         if ($('#tipoDocumento option:selected').text() === 'DNI') {
             $('#numeroDocumento').attr('maxlength', '8')
+            $('#numeroDocumento').val('')
+            $('#numeroDocumento').val('')
+            $('#nombres').val('')
+            $('#apellidoPaterno').val('')
+            $('#apellidoMaterno').val('')
+            $('#celular').val('')
+            $('#email').val('')
+            $('#direccion').val('')
+
             $('#numeroDocumento').attr('placeholder', 'Ingrese Número de DNI')
             $('#numeroDocumento').removeAttr('disabled')
-            $('#btnguardarNuevoCliente').removeAttr('disabled')
-
+            $('#nombres').removeClass()
+            $('#nombres').addClass('form-control solo-texto')
+            $('.solo-texto').keyup(function () {
+                this.value = (this.value + '').replace(/[^ a-záéíóúüñ]+/ig, '');
+            });
         }
         if ($('#tipoDocumento option:selected').text() === 'RUC') {
             $('#numeroDocumento').attr('maxlength', '11')
+            $('#numeroDocumento').val('')
+            $('#numeroDocumento').val('')
+            $('#nombres').val('')
+            $('#apellidoPaterno').val('')
+            $('#apellidoMaterno').val('')
+            $('#celular').val('')
+            $('#email').val('')
+            $('#direccion').val('')
             $('#numeroDocumento').attr('placeholder', 'Ingrese Número de RUC')
             $('#numeroDocumento').removeAttr('disabled')
             $('#btnguardarNuevoCliente').removeAttr('disabled')
             $('#apellidoPaterno').removeAttr('required')
             $('#apellidoMaterno').removeAttr('required')
 
+            $('#nombres').removeClass()
+            $('#nombres').addClass('form-control texto-limpio')
+            $('.texto-limpio').keyup(function () {
+                this.value = (this.value + '').replace(/[^ a-z0-9áéíóúüñ#º()]+/ig, '');
+            });
         }
     })
     $('form#guardarNuevoCliente').submit(function () {
-        $('.close').attr("disabled", true);
-        $('#btnCerrarModal').attr("disabled", true);
-        $('#btnguardarNuevoCliente').attr("disabled", true);
-        $('#btnguardarNuevoCliente').html('Guardando Datos ...');
         event.preventDefault();
-        $.ajax({
-            cache: false,
-            type: 'post',
-            url: '<?php echo base_url(); ?>contactos/guardarCliente',
-            data: $('#guardarNuevoCliente').serialize(),
-            success: function (response) {
-                if (response === '') {
-                    $('#guardarNuevoCliente').html('<div class="box-body"><p>Ocurrio un Problema al guardar</p>\n\
-                <button type="button" id="btnCerrarModal" class="btn btn-primary pull-right" data-dismiss="modal">Aceptar</button></div>');
-                } else {
-                    $('#guardarNuevoCliente').html('<div class="box-body"><p>El Usuario fue Agregado Satisfactoriamente</p>\n\
-                <button type="button" id="btnCerrarModal" class="btn btn-primary pull-right" data-dismiss="modal">Aceptar</button></div>');
-                }
-                
-                $('.close').removeAttr('disabled')
+        var ok = true;
+        if ($('#tipoDocumento option:selected').val() === '') {
+            ok = false;
+        }
+        if ($('#tipoDocumento option:selected').text() === 'DNI') {
+            if ($('#numeroDocumento').val() === '') {
+                ok = false;
+                $('#numeroDocumento').focus();
             }
-        });
+            if ($('#numeroDocumento').val().length !== 8) {
+                ok = false;
+                $('#numeroDocumento').focus();
+            }
+        }
+        if ($('#tipoDocumento option:selected').text() === 'RUC') {
+            if ($('#numeroDocumento').val() === '') {
+                ok = false;
+                $('#numeroDocumento').focus();
+            }
+            if ($('#numeroDocumento').val().length !== 11) {
+                ok = false;
+                $('#numeroDocumento').focus();
+            }
+        }
+
+        if ($('#nombres').val() === '') {
+            ok = false;
+            $('#nombres').focus();
+        }
+        if ($('#apellidoPaterno').val() === '') {
+            ok = false;
+            $('#apellidoPaterno').focus();
+        }
+        if ($('#apellidoMaterno').val() === '') {
+            ok = false;
+            $('#apellidoMaterno').focus();
+        }
+        if ($('#celular').val() === '') {
+            ok = false;
+            $('#celular').focus();
+        }
+        if ($('#email').val() === '') {
+            ok = false;
+            $('#email').focus();
+        }
+        if ($('#direccion').val() === '') {
+            ok = false;
+            $('#direccion').focus();
+        }
+        if (ok) {
+            $('.close').attr("disabled", true);
+            $('#btnCerrarModal').attr("disabled", true);
+            $('#btnguardarNuevoCliente').attr("disabled", true);
+            $('#btnguardarNuevoCliente').html('Guardando Datos ...');
+
+            $.ajax({
+                cache: false,
+                type: 'post',
+                url: '<?php echo base_url(); ?>contactos/guardarCliente',
+                data: $('#guardarNuevoCliente').serialize(),
+                success: function (response) {
+                    if (response === '') {
+                        $('#guardarNuevoCliente').html('<div class="box-body"><p>Ocurrio un Problema al guardar</p>\n\
+                <button type="button" id="btnCerrarModal" class="btn btn-primary pull-right" data-dismiss="modal">Aceptar</button></div>');
+                    } else {
+                        $('#guardarNuevoCliente').html('<div class="box-body"><p>El Usuario fue Agregado Satisfactoriamente</p>\n\
+                <button type="button" id="btnCerrarModal" class="btn btn-primary pull-right" data-dismiss="modal">Aceptar</button></div>');
+                    }
+
+                    $('.close').removeAttr('disabled')
+                }
+            });
+        }
+
     });
+
+
 </script>
 

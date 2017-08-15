@@ -24,7 +24,7 @@
 <!-- jQuery 2.2.3 -->
         <script src="<?php echo base_url(); ?>recursos/plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        
         <?php
         if (isset($iCheck)) {
             ?>
@@ -67,8 +67,9 @@
             ?>
             <!-- bootstrap_fileInput - text editor -->
             <link href="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
-            <script src="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
+            
             <script src="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/js/fileinput.min.js" type="text/javascript"></script>
+            <script src="<?php echo base_url(); ?>recursos/plugins/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
             <?php
         }
         ?>

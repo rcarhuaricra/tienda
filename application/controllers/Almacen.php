@@ -15,19 +15,21 @@ class Almacen extends CI_Controller {
     }
 
     public function productos() {
-        
-        echo $this->GUID();
+
+        //echo $this->GUID();
         $data['titulo'] = 'Panel de Atención';
         $data['iCheck'] = TRUE;
         $data['fileInput'] = TRUE;
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);
+        $this->load->helper('form');
         $datos['marcas'] = $this->almacen->buscaMarcas_model_select();
+        $datos['categorias'] = $this->almacen->buscaCategoria_model_select();
         $this->load->view('internas/almacen/producto', $datos);
         $this->load->view('internas/almacen/modales');
         $this->load->view('plantilla/piedePagina');
-        $this->load->view('plantilla/menuderecha');
+        //$this->load->view('plantilla/menuderecha');
         $this->load->view('plantilla/footer', $data);
     }
 
@@ -69,20 +71,35 @@ class Almacen extends CI_Controller {
         echo json_encode($dato);
     }
 
+    public function buscarProductos() {
+        $keyword = $this->input->post('query');
+        $data = $this->almacen->buscaProductos_model($keyword);
+        foreach ($data as $row) {
+            $dato[] = $row->NOMBRE_CATEGORIA_PRODUCTO;
+        }
+        echo json_encode($dato);
+    }
+
     public function buscarCodigoBarras() {
         $keyword = $this->input->post('query');
-        $data = $this->almacen->buscaMarcas_model($keyword);
+        $data = $this->almacen->buscaCodigoBarras($keyword);
         foreach ($data as $row) {
-            $dato[] = $row->NOMBRE_MARCA;
+            $dato[] = $row->CODIGO_BARRAS;
         }
         echo json_encode($dato);
     }
 
     public function guardarMarcas() {
         $marcas = $this->input->post('txtMarca');
+        $id_marca = $this->GUID();
 
+        echo $this->almacen->guardarMarca_model($marcas, $id_marca);
+    }
 
-        echo $this->almacen->guardarMarca_model($marcas);
+    public function guardarCategoria() {
+        $categoria = $this->input->post('txtCategoria');
+        $id_categoria = $this->GUID();
+        echo $this->almacen->guardarCategoria_model($categoria, $id_categoria);
     }
 
     protected function GUID() {

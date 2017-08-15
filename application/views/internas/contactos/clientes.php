@@ -88,7 +88,7 @@
                                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres o Razón Social"  disabled/>
                                 <span class="help-block text-right hidden" id="msjnombres"></span>
                             </div>
-                            
+
                         </div>
 
                         <div class="form-group">
@@ -138,6 +138,13 @@
     </div>
 </div>
 <script>
+    /* LLAMAR A MODAL  */
+    $(".llamarModal").click(function () {
+        var ids = '#modalNuevoCliente';
+        $(ids).modal({backdrop: "static"}).on('hidden.bs.modal', function (e) {
+            location.reload();
+        });
+    });
 
     $('form').find('input[id=numeroDocumento]').blur(function () {
         if (documentoRegistrado($(this).val(), '#xDocumento') === false) {

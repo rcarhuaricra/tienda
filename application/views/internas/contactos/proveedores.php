@@ -166,7 +166,6 @@
                     console.log(response);
                     if (response === '') {
                         $(div).hide().addClass('hide').slideDown('slow');
-
                         $('#nombres').removeAttr('disabled');
                         $('#nombres').focus();
                         $('#apellidoPaterno').removeAttr('disabled');

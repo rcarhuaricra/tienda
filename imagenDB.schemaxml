@@ -13,49 +13,50 @@
 <sql_create_table>CREATE TABLE `categoria_producto` (
   `ID_CATEGORIA_PRODUCTO` varchar(30) NOT NULL,
   `NOMBRE_CATEGORIA_PRODUCTO` varchar(100) DEFAULT NULL,
-  `USERREG` varchar(36) DEFAULT NULL,
+  `USERREG` varchar(35) DEFAULT NULL,
   `FECREG` datetime DEFAULT NULL,
-  `USERMOD` varchar(36) DEFAULT NULL,
+  `USERMOD` varchar(35) DEFAULT NULL,
   `FECMOD` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_CATEGORIA_PRODUCTO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="marca" view="standard">
-<left>35</left>
-<top>221</top>
+<left>22</left>
+<top>332</top>
 <width>242</width>
 <height>107</height>
 <sql_create_table>CREATE TABLE `marca` (
   `ID_MARCA` varchar(30) NOT NULL,
   `NOMBRE_MARCA` varchar(50) DEFAULT NULL,
-  `USERREG` varchar(36) DEFAULT NULL,
+  `USERREG` varchar(35) DEFAULT NULL,
   `FECREG` datetime DEFAULT NULL,
-  `USERMOD` varchar(36) DEFAULT NULL,
+  `USERMOD` varchar(35) DEFAULT NULL,
   `FECMOD` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_MARCA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="producto" view="standard">
-<left>426</left>
-<top>384</top>
+<left>523</left>
+<top>383</top>
 <width>315</width>
 <height>270</height>
 <sql_create_table>CREATE TABLE `producto` (
   `ID_PRODUCTO` varchar(30) NOT NULL,
-  `CODIGO_BARRAS` varchar(15) DEFAULT NULL,
+  `CODIGO_BARRAS` varchar(13) DEFAULT NULL,
   `NOMBRE_PRODUCTO` varchar(60) DEFAULT NULL,
   `ID_MARCA` varchar(30) DEFAULT NULL,
   `ID_CATEGORIA_PRODUCTO` varchar(30) DEFAULT NULL,
   `DESCRIPCION_PRODUCTO` varchar(300) DEFAULT NULL,
-  `MODELO_PRODUCTO` varchar(50) DEFAULT NULL,
-  `IMG_PRODUCTO` varchar(50) DEFAULT NULL,
-  `USERREG` varchar(36) DEFAULT NULL,
+  `IMG_PRODUCTO` varchar(100) DEFAULT NULL,
+  `USERREG` varchar(35) DEFAULT NULL,
   `FECREG` datetime DEFAULT NULL,
-  `USERMOD` varchar(36) DEFAULT NULL,
+  `USERMOD` varchar(35) DEFAULT NULL,
   `FECMOD` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_PRODUCTO`),
-  KEY `MARCA_ID` (`ID_MARCA`),
-  KEY `CATEGORIA_ID` (`ID_CATEGORIA_PRODUCTO`)
+  KEY `ID_MARCA` (`ID_MARCA`),
+  KEY `ID_CATEGORIA_PRODUCTO` (`ID_CATEGORIA_PRODUCTO`),
+  CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`ID_MARCA`) REFERENCES `marca` (`ID_MARCA`),
+  CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`ID_CATEGORIA_PRODUCTO`) REFERENCES `categoria_producto` (`ID_CATEGORIA_PRODUCTO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="tipo_documento" view="standard">
@@ -73,7 +74,7 @@
 <left>691</left>
 <top>1</top>
 <width>275</width>
-<height>346</height>
+<height>360</height>
 <sql_create_table>CREATE TABLE `persona` (
   `ID_PERSONA` varchar(30) NOT NULL,
   `USER` varchar(35) DEFAULT NULL,
@@ -86,17 +87,17 @@
   `TELEFONO` varchar(9) DEFAULT NULL,
   `EMAIL` varchar(50) DEFAULT NULL,
   `PASSWORD` varchar(32) DEFAULT NULL,
-  `USERREG` varchar(36) DEFAULT NULL,
-  `FECREG` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `ID_TIPO_PERSONA` int(11) DEFAULT NULL,
   `PERSONA_CONTACTO` varchar(35) DEFAULT NULL,
-  `USERMOD` varchar(36) DEFAULT NULL,
+  `ID_TIPO_PERSONA` int(11) DEFAULT NULL,
+  `USERREG` varchar(35) DEFAULT NULL,
+  `FECREG` timestamp NULL DEFAULT NULL,
+  `USERMOD` varchar(35) DEFAULT NULL,
   `FECMOD` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_PERSONA`),
-  KEY `ID_TIPO_PERSONA` (`ID_TIPO_PERSONA`),
   KEY `ID_TIPO_DOCUMENTO` (`ID_TIPO_DOCUMENTO`),
-  CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`ID_TIPO_PERSONA`) REFERENCES `tipo_persona` (`ID_TIPO_PERSONA`),
-  CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`ID_TIPO_DOCUMENTO`) REFERENCES `tipo_documento` (`ID_TIPO_DOCUMENTO`)
+  KEY `ID_TIPO_PERSONA` (`ID_TIPO_PERSONA`),
+  CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`ID_TIPO_DOCUMENTO`) REFERENCES `tipo_documento` (`ID_TIPO_DOCUMENTO`),
+  CONSTRAINT `persona_ibfk_3` FOREIGN KEY (`ID_TIPO_PERSONA`) REFERENCES `tipo_persona` (`ID_TIPO_PERSONA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="tipo_persona" view="standard">
@@ -111,15 +112,21 @@
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="images" view="standard">
-<left>351</left>
-<top>178</top>
+<left>92</left>
+<top>131</top>
 <width>238</width>
 <height>124</height>
 <sql_create_table>CREATE TABLE `images` (
   `ID_IMAGES` varchar(30) NOT NULL,
   `ID_PRODUCTO` varchar(30) DEFAULT NULL,
   `NOMBRE_IMAGE` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`ID_IMAGES`)
+  `USERREG` varchar(35) DEFAULT NULL,
+  `FECREG` datetime DEFAULT NULL,
+  `USERMOD` varchar(35) DEFAULT NULL,
+  `FECMOD` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID_IMAGES`),
+  KEY `ID_PRODUCTO` (`ID_PRODUCTO`),
+  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`ID_PRODUCTO`) REFERENCES `producto` (`ID_PRODUCTO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 </tables>

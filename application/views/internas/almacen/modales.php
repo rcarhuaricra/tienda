@@ -1,4 +1,4 @@
-	
+
 <div class="modal fade" id="NuevoMarca" > 
     <div class="modal-dialog">
         <div class="modal-content">
@@ -11,14 +11,14 @@
                 <form class="form-horizontal" id="guardarMarca">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="inputnombre" class="col-sm-2 control-label">Nombre</label>
+                            <label for="txtMarca" class="col-sm-2 control-label">Nombre</label>
                             <div class="col-sm-10">
                                 <div class="bgcolor">
                                     <input type="text" name="txtMarca" id="txtMarca" class="form-control typeahead"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="alert alert-dismissible" id="alert" hidden>
+                        <div class="alert alert-dismissible" id="alertMarca" hidden>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -31,6 +31,13 @@
     </div>
 </div>
 <script>
+    $(".llamarModal").click(function () {
+        ALERT ('AQUI');
+        var ids = '#modal' + this.id;
+        $(ids).modal({backdrop: "static"}).on('hidden.bs.modal', function (e) {
+            location.reload();
+        });
+    });
     $('#txtMarca').typeahead({
         source: function (query, result) {
             console.log(query);
@@ -58,21 +65,21 @@
             data: $('#guardarMarca').serialize(),
             success: function (response) {
                 if (response > 0) {
-                    $('#alert').removeAttr('hidden')
-                    $('#alert').removeClass(function () {
+                    $('#alertMarca').removeAttr('hidden')
+                    $('#alertMarca').removeClass(function () {
                         return $(this).attr("class");
                     });
-                    $('#alert').addClass('alert alert-success');
-                    $('#alert').html('<i class="icon fa fa-check"></i> La Marca fue Registrada con Exito')
+                    $('#alertMarca').addClass('alert alert-success');
+                    $('#alertMarca').html('<i class="icon fa fa-check"></i> La Marca fue Registrada con Exito')
                     console.log(response);
                     console.log('ingreso todo');
                 } else {
-                    $('#alert').removeAttr('hidden')
-                    $('#alert').removeClass(function () {
+                    $('#alertMarca').removeAttr('hidden')
+                    $('#alertMarca').removeClass(function () {
                         return $(this).attr("class");
                     });
-                    $('#alert').addClass('alert alert-danger');
-                    $('#alert').html('<i class="icon fa fa-ban"></i> Esa Marca ya Existe')
+                    $('#alertMarca').addClass('alert alert-danger');
+                    $('#alertMarca').html('<i class="icon fa fa-ban"></i> Esa Marca ya Existe')
                     console.log(response);
                     console.log('no ingreso nada');
                 }
@@ -80,6 +87,88 @@
         });
     });
 </script>
+<div class="modal fade" id="NuevoCategoria" > 
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Nueva Categoria</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="guardarCategoria">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="txtCategoria" class="col-sm-2 control-label">Categoria</label>
+                            <div class="col-sm-10">
+                                <div class="bgcolor">
+                                    <input type="text" name="txtCategoria" id="txtCategoria" class="form-control typeahead"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-dismissible" id="alertCategoria" hidden>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary pull-right">Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#txtCategoria').typeahead({
+        source: function (query, result) {
+            console.log(query);
+            $.ajax({
+                url: "<?php echo base_url(); ?>almacen/buscarProductos",
+                data: 'query=' + query,
+                dataType: "json",
+                type: "POST",
+                success: function (data) {
+                    console.log(data);
+                    result($.map(data, function (item) {
+                        return item;
+                    }));
+                }
+            });
+        }
+    });
+
+    $('form#guardarCategoria').submit(function () {
+        event.preventDefault();
+        $.ajax({
+            cache: false,
+            type: 'post',
+            url: '<?php echo base_url(); ?>almacen/guardarCategoria',
+            data: $('#guardarCategoria').serialize(),
+            success: function (response) {
+                if (response > 0) {
+                    $('#alertCategoria').removeAttr('hidden')
+                    $('#alertCategoria').removeClass(function () {
+                        return $(this).attr("class");
+                    });
+                    $('#alertCategoria').addClass('alert alert-success');
+                    $('#alertCategoria').html('<i class="icon fa fa-check"></i> La Categoria fue Registrada con Exito')
+                    console.log(response);
+                    console.log('ingreso todo');
+                } else {
+                    $('#alertCategoria').removeAttr('hidden')
+                    $('#alertCategoria').removeClass(function () {
+                        return $(this).attr("class");
+                    });
+                    $('#alertCategoria').addClass('alert alert-danger');
+                    $('#alertCategoria').html('<i class="icon fa fa-ban"></i> Esa Categoria ya Existe')
+                    console.log(response);
+                    console.log('no ingreso nada');
+                }
+            }
+        });
+    });
+</script>
+
 <div class="modal fade" id="NuevoProducto" > 
     <div class="modal-dialog">
         <div class="modal-content">

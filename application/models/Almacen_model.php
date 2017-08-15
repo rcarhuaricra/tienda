@@ -7,22 +7,54 @@ class Almacen_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->result();
     }
-    public function buscaMarcas_model_select() {
-        $sql = "select * from `marca` M";
+    public function buscaProductos_model($keyword) {
+        $sql = "select * from `categoria_producto` CP where CP.`NOMBRE_CATEGORIA_PRODUCTO` LIKE '$keyword%'";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function buscaCodigoBarras($keyword) {
+        $sql = "SELECT * FROM `producto` WHERE CODIGO_BARRAS LIKE '$keyword%'";
         $query = $this->db->query($sql);
         return $query->result();
     }
 
-    public function guardarMarca_model($marcas) {
+    public function buscaMarcas_model_select() {
+        $sql = "select * from `marca` M";
+        $query = $this->db->query($sql);
+        return $query ->result();
+        
+    }
+    public function buscaCategoria_model_select() {
+        $sql = "select * from `categoria_producto` P";
+        $query = $this->db->query($sql);
+        return $query ->result();
+        
+    }
+
+    public function guardarMarca_model($marcas,$id_marca) {
         $sql = "select * from `marca` M where M.`NOMBRE_MARCA` = '$marcas'";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             return FALSE;
         } else {
             $data = array(
-            'NOMBRE_MARCA' => $marcas
-        );
+                'ID_MARCA' => $id_marca,
+                'NOMBRE_MARCA' => $marcas
+            );
             return $this->db->insert('marca', $data);
+        }
+    }
+    public function guardarCategoria_model($categoria,$id_categoria) {
+        $sql = "select * from `categoria_producto` CP where CP.`NOMBRE_CATEGORIA_PRODUCTO` = '$categoria'";        
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return FALSE;
+        } else {
+            $data = array(
+                'ID_CATEGORIA_PRODUCTO' => $id_categoria,
+                'NOMBRE_CATEGORIA_PRODUCTO' => $categoria
+            );
+            return $this->db->insert('categoria_producto', $data);
         }
     }
 

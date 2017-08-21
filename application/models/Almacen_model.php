@@ -1,6 +1,16 @@
 <?php
 
 class Almacen_model extends CI_Model {
+    public function guardarProducto($dato){
+        $sql = "CALL `insertProducto`('$dato[1]','$dato[2]','$dato[3]','$dato[4]','$dato[5]','$dato[6]','$dato[7]')";
+        $this->db->query($sql);        
+        if($this->db->affected_rows()>0){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+
+    }
 
     public function buscaMarcas_model($keyword) {
         $sql = "select * from `marca` M where M.`NOMBRE_MARCA` LIKE '$keyword%'";

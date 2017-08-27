@@ -47,8 +47,8 @@ class Contactos extends CI_Controller {
         echo $query;
     }
 
-    public function validarDocumento($tipopersona) {
-        
+    public function validarDocumento() {
+        $tipopersona=CLIENTE;
         $documento = $this->input->post('documento');
         echo $this->personas->validarDocumentomodel($documento, $tipopersona);
     }

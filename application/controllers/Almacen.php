@@ -6,7 +6,6 @@ class Almacen extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('session');
         $this->load->library('form_validation');
         if (isset($_SESSION['logged']) == FALSE) {
             header("location:" . base_url() . 'home');
@@ -24,7 +23,6 @@ class Almacen extends CI_Controller {
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);
-        $this->load->helper('form');
         $datos['marcas'] = $this->almacen->buscaMarcas_model_select();
         $datos['categorias'] = $this->almacen->buscaCategoria_model_select();
         $this->load->view('internas/almacen/producto', $datos);
@@ -50,7 +48,7 @@ class Almacen extends CI_Controller {
                 $config['upload_path'] = "./recursos/images/product/";
                 $config['allowed_types'] = "png|jpg";
                 $config['file_name'] = $this->input->post('codigoBarra');
-                
+
                 $this->load->library("upload", $config);
                 if ($this->upload->do_upload("inputImage")) {
                     $data = array("upload_data" => $this->upload->data());
@@ -89,7 +87,8 @@ class Almacen extends CI_Controller {
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);
-        $this->load->view('internas/almacen/marcas');
+        $datos['Marcas'] = $this->General_Model->ListarMarcas_model();
+        $this->load->view('internas/almacen/marcas',$datos);
         $this->load->view('internas/almacen/modales');
         $this->load->view('plantilla/piedePagina');
         $this->load->view('plantilla/menuderecha');
@@ -109,7 +108,20 @@ class Almacen extends CI_Controller {
     }
 
     public function newProductos() {
-        $this->load->view('internas/almacen/nuevo');
+          $data['titulo'] = 'Panel de Atención';
+        $data['iCheck'] = TRUE;
+        $data['fileInput'] = TRUE;
+        $this->load->view('plantilla/header', $data);
+        $this->load->view('plantilla/cabecera');
+        $this->load->view('plantilla/menuizquierda', $data);
+        $this->load->helper('form');
+        $datos['marcas'] = $this->almacen->buscaMarcas_model_select();
+        $datos['categorias'] = $this->almacen->buscaCategoria_model_select();
+        $this->load->view('internas/almacen/producto', $datos);
+        $this->load->view('internas/almacen/modales');
+        $this->load->view('plantilla/piedePagina');
+        //$this->load->view('plantilla/menuderecha');
+        $this->load->view('plantilla/footer', $data);
     }
 
     public function buscarMarcas() {

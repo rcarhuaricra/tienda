@@ -35,7 +35,7 @@ class Almacen_model extends CI_Model {
         
     }
     public function buscaCategoria_model_select() {
-        $sql = "select * from `categoria_producto` P";
+        $sql = "CALL ListarCategoria()";
         $query = $this->db->query($sql);
         return $query ->result();
         

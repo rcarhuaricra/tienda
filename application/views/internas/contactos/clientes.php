@@ -249,7 +249,7 @@
             });
         }
     })
-    $('form#guardarNuevoCliente').submit(function () {
+    $('form#guardarNuevoCliente').submit(function (event) {
         event.preventDefault();
         var ok = true;
         if ($('#tipoDocumento option:selected').val() === '') {

@@ -1,12 +1,6 @@
-
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <?php cabecera(); ?>
-    <!-- Main content -->
     <section class="content">
-        <!-- Small boxes (Stat box) -->
-
         <form class="form-horizontal" id="guardarNuevoProducto" action="<?php echo base_url(); ?>almacen/guardarProductos" method="post">
             <div class="box-body">
                 <div class="form-group" title="Digitar Solo Números"  data-toggle="tooltip">
@@ -16,16 +10,13 @@
                                placeholder="Codigo de Barras del Producto" />
                         <div class="pull-right text-danger text-bold mensaje-alert" id="error-codigoBarra"></div>
                     </div>
-
                 </div>
-
                 <div class="form-group">
                     <label for="producto" class="col-sm-4 control-label">Nombre del Producto</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control texto-limpio" id="producto" name="producto" placeholder="Ingrese Nombre del Producto"  />
                         <div class="pull-right text-danger text-bold mensaje-alert" id="error-producto"></div>
                     </div>
-
                 </div>
                 <div class="form-group" title="Buscar Marca si no la encuentra la Puede Agregar"  data-toggle="tooltip">
                     <label for="marca" class="col-sm-4 control-label">Marca</label>
@@ -39,7 +30,6 @@
                                 }
                                 ?>
                             </select>
-
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#NuevoMarca">
                                     <i class="fa fa-plus"></i> Agregar Marca
@@ -61,7 +51,6 @@
                                 }
                                 ?>
                             </select>
-
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#NuevoCategoria">
                                     <i class="fa fa-plus"></i> Agregar Categoria
@@ -90,15 +79,13 @@
                 <button type="button" id="btnCerrarModal" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                 <button type="submit" id="btnguardarNuevoCliente" class="btn btn-primary pull-right" >Guardar</button>
             </div>
-        </form><!-- /.row (main row) -->
-
+        </form>
     </section>
-    <!-- /.content -->
 </div>
 <script>
     $('form#guardarNuevoProducto').submit(function (event) {
         event.preventDefault();
-        var formData=new FormData( $('form#guardarNuevoProducto')[0]);
+        var formData = new FormData($('form#guardarNuevoProducto')[0]);
         $.ajax({
             cache: false,
             type: $('form#guardarNuevoProducto').attr('method'),
@@ -106,7 +93,6 @@
             data: formData,
             contentType: false,
             processData: false,
-            
             success: function (response) {
                 if (response === "exito") {
                     swal("El Producto fue registrado con Exito")

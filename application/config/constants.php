@@ -97,3 +97,5 @@ define('CLIENTE', '5');
 define('DNI', '1');
 define('RUC', '2');
 
+
+

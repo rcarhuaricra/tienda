@@ -15,7 +15,6 @@ class Almacen extends CI_Controller {
     }
 
     public function productos() {
-
         //echo $this->GUID();
         $data['titulo'] = 'Panel de Atención';
         $data['iCheck'] = TRUE;
@@ -23,13 +22,18 @@ class Almacen extends CI_Controller {
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);
-        $datos['marcas'] = $this->almacen->buscaMarcas_model_select();
-        $datos['categorias'] = $this->almacen->buscaCategoria_model_select();
-        $this->load->view('internas/almacen/producto', $datos);
+        //$datos['marcas'] = $this->almacen->buscaMarcas_model_select();
+        //$datos['categorias'] = $this->almacen->buscaCategoria_model_select();
+        $this->load->view('internas/almacen/producto');
         $this->load->view('internas/almacen/modales');
         $this->load->view('plantilla/piedePagina');
         //$this->load->view('plantilla/menuderecha');
         $this->load->view('plantilla/footer', $data);
+    }
+
+    public function tablaProductos() {
+        $datos['Productos'] = $this->General_Model->ListarProductos_model();
+        $this->load->view('internas/almacen/tablaProductos', $datos);
     }
 
     public function guardarProductos() {
@@ -44,13 +48,15 @@ class Almacen extends CI_Controller {
             $this->form_validation->set_message('codigoBarra', 'el campo codigo de barras es requerido');
             if ($this->form_validation->run() == TRUE) {
                 $config['maxsize'] = 2000;
-                $config['quality'] = '90%';
+                $config['quality'] = '100%';
                 $config['upload_path'] = "./recursos/images/product/";
-                $config['allowed_types'] = "png|jpg";
+                $config['allowed_types'] = "jpg";
                 $config['file_name'] = $this->input->post('codigoBarra');
-
                 $this->load->library("upload", $config);
+
                 if ($this->upload->do_upload("inputImage")) {
+                   // $this->reducirImagen($this->input->post('codigoBarra'));
+                    $this->CrearMiniatura($this->input->post('codigoBarra'));
                     $data = array("upload_data" => $this->upload->data());
                     $dato[1] = $this->input->post('codigoBarra');
                     $dato[2] = $this->input->post('producto');
@@ -81,6 +87,35 @@ class Almacen extends CI_Controller {
         }
     }
 
+    private function reducirImagen($codigoBarras) {
+        $config2['source_image'] = "./recursos/images/product/$codigoBarras.jpg";
+        $config2['width'] = 800;
+        $config2['height'] = 600;        
+        $this->load->library('image_lib', $config2);
+        if (!$this->image_lib->resize()) {
+            echo $this->image_lib->display_errors();
+        }
+    }
+    private function CrearMiniatura($codigoBarras) {
+        $config3['source_image'] = "./recursos/images/product/$codigoBarras.jpg";
+        $config3['width'] = 100;
+        $config3['height'] = 150;
+        $config3['maintain_ratio'] = TRUE;
+        $config3['new_image'] = "./recursos/images/product/thumb/$codigoBarras-thumb.jpg";
+        $this->load->library('image_lib', $config3);
+        if (!$this->image_lib->resize()) {
+            echo $this->image_lib->display_errors();
+        }
+    }
+
+    public function editarProducto() {
+        $idProducto = $this->input->post('ID');
+        $datos['Usuario'] = $this->General_Model->MostrarUsuario($idProducto);
+        $datos['Documento'] = $this->General_Model->listarDocumento_model();
+        $datos['Rol'] = $this->General_Model->ListarRoles_model();
+        $this->load->view('internas/almacen/ModalActualizarProducto', $datos);
+    }
+
     public function marcas() {
         $data['titulo'] = 'Historial de COmpras';
         $data['iCheck'] = TRUE;
@@ -88,7 +123,7 @@ class Almacen extends CI_Controller {
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);
         $datos['Marcas'] = $this->General_Model->ListarMarcas_model();
-        $this->load->view('internas/almacen/marcas',$datos);
+        $this->load->view('internas/almacen/marcas', $datos);
         $this->load->view('internas/almacen/modales');
         $this->load->view('plantilla/piedePagina');
         $this->load->view('plantilla/menuderecha');
@@ -108,7 +143,7 @@ class Almacen extends CI_Controller {
     }
 
     public function newProductos() {
-          $data['titulo'] = 'Panel de Atención';
+        $data['titulo'] = 'Panel de Atención';
         $data['iCheck'] = TRUE;
         $data['fileInput'] = TRUE;
         $this->load->view('plantilla/header', $data);
@@ -117,7 +152,7 @@ class Almacen extends CI_Controller {
         $this->load->helper('form');
         $datos['marcas'] = $this->almacen->buscaMarcas_model_select();
         $datos['categorias'] = $this->almacen->buscaCategoria_model_select();
-        $this->load->view('internas/almacen/producto', $datos);
+        $this->load->view('internas/almacen/nuevo', $datos);
         $this->load->view('internas/almacen/modales');
         $this->load->view('plantilla/piedePagina');
         //$this->load->view('plantilla/menuderecha');

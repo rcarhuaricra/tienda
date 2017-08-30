@@ -5,6 +5,7 @@ class General_Model extends CI_Model {
     public function ListarUsuarios($tipoPersona) {
         $sql = "CALL listarUsuarios('$tipoPersona')";
         $query = $this->db->query($sql);
+        $this->db->close(); 
         return $query->result();
     }
 
@@ -12,8 +13,7 @@ class General_Model extends CI_Model {
         $sql = "CALL mostrarUsuario('$idpersona')";
         $query = $this->db->query($sql);
         $this->db->close(); 
-        return $query->row();
-        
+        return $query->row();        
     }
     
     public function listarDocumento_model(){
@@ -31,6 +31,15 @@ class General_Model extends CI_Model {
     public function ListarMarcas_model(){
         $sql = "CALL listarMarcas()";
         $query = $this->db->query($sql);
+        $this->db->close(); 
         return $query->result();
     }
+    
+    public function ListarProductos_model(){
+        $sql = "CALL ListarProductos()";
+        $query = $this->db->query($sql);
+        $this->db->close(); 
+        return $query->result();
+    }
+    
 }

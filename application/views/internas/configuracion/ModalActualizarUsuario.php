@@ -18,15 +18,22 @@
                 <div class="form-group">
                     <label for="apePat" class="col-sm-5 control-label">Apellido Paterno</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="apePat" name="apePat" placeholder="Ingresa el Apellido Paterno" value="<?php echo $Usuario->APELLIDO_PATERNO; ?>" pattern="[a-zA-Z0-9]{4,64}" >
+                        <input type="text" class="form-control" id="apePat" name="apePat" placeholder="Ingresa el Apellido Paterno" value="<?php echo $Usuario->APELLIDO_PATERNO; ?>" >
                         <div class="pull-right text-danger text-bold mensaje-alert" id="error-apePat"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="apeMat" class="col-sm-5 control-label">Apellido Materno</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="apeMat" name="apeMat" placeholder="Ingresa el Apellido Materno" value="<?php echo $Usuario->APELLIDO_MATERNO; ?>" pattern="[a-zA-Z0-9]{4,64}" >
+                        <input type="text" class="form-control" id="apeMat" name="apeMat" placeholder="Ingresa el Apellido Materno" value="<?php echo $Usuario->APELLIDO_MATERNO; ?>"  >
                         <div class="pull-right text-danger text-bold mensaje-alert" id="error-apeMat"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="telefono" class="col-sm-5 control-label">Teléfono</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingresa Número de Teléfono" value="<?php echo $Usuario->TELEFONO; ?>">
+                        <div class="pull-right text-danger text-bold mensaje-alert" id="error-telefono"></div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -122,8 +129,17 @@
             success: function (response) {
 
                 if (response === "exito") {
-                    swal("Los Datos del Usuario Fueron Actualizados")
-                    actualizaTabla();
+                    swal({
+                        title: "Los Datos del Usuario Fueron Actualizados!",
+                        type: "success",
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: "Ok!",
+                        closeOnConfirm: true
+                    },
+                            function () {
+                                $('#ModalUsuario').modal('hide');
+                            });
                 } else if (response === "error") {
                     swal("Hubo un problema al actualizar Los Datos")
                 } else {
@@ -131,6 +147,7 @@
                     $("form#updateTrabajador #error-nombre").html(d.nombre);
                     $("form#updateTrabajador #error-apePat").html(d.apePat);
                     $("form#updateTrabajador #error-apeMat").html(d.apeMat);
+                    $("form#updateTrabajador #error-telefono").html(d.telefono);
                     $("form#updateTrabajador #error-tipoDocumento").html(d.tipoDocumento);
                     $("form#updateTrabajador #error-numeroDoc").html(d.numeroDoc);
                     $("form#updateTrabajador #error-email").html(d.email);

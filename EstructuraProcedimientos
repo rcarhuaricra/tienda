@@ -1,0 +1,16 @@
+updateTrabajadores ('P1','P2','P3','P4','P5','P6','P7','P8','P9','P10','P11','P12','P13')        
+        `ID_PERSONA`            = p1;  
+        `NOMBRES`               = p2,
+        `APELLIDO_PATERNO`      = p3,
+        `APELLIDO_MATERNO`      = p4,
+        `ID_TIPO_DOCUMENTO`     = p5,
+        `NUMERO_DOCUMENTO`      = p6,
+        `DIRECCION`             = p7,
+        `TELEFONO`              = p8,
+        `EMAIL`                 = p9,
+        `PERSONA_CONTACTO`      = p10,
+        `ID_TIPO_PERSONA`       = p11,
+        `USERMOD`               = p12,
+        `FECMOD`                = NOW(),
+        `USERESTADO`            = p13
+        

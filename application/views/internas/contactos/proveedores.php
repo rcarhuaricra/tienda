@@ -1,44 +1,20 @@
 <div class="content-wrapper">
-    <?php cabecera(); ?>
+    <?php cabecera();
+    ?>
     <section class="content">
         <div class="row">
             <section class="col-lg-12 connectedSortable">
 
                 <div class="box box-primary">
-                    <div class="box-footer clearfix no-border">
-                        <button type="button" class="btn btn-default pull-right llamarModal" id="NuevoCliente">
-                            <i class="fa fa-plus"></i> Agregar Proveedor
-                        </button>
+                    <div class="box-header pull-right">
+                        <a href="<?php echo base_url(); ?>contactos/NuevoProveedor" class="btn btn-primary"><span class="icon icon-add-user"></span> Nuevo Proveedor</a>
+
                     </div>
-                    <div class="box-body clearfix no-border">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nombre o Razón Social</th>
-                                    <th>Tipo de Doc.</th>
-                                    <th>Número de Doc.</th>
-                                    <th>Télefono</th>
-                                    <th>Persona Contacto</th>
-                                    <th>E-mail</th>
-                                    <th>Dirección</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($clientes as $value) {
-                                    echo "<tr>";
-                                    echo "<td>$value->NOMBRES $value->APELLIDO_PATERNO $value->APELLIDO_MATERNO</td>";
-                                    echo "<td>$value->DOCUMENTO</td>";
-                                    echo "<td>$value->NUMERO_DOCUMENTO</td>";
-                                    echo "<td>$value->TELEFONO</td>";
-                                    echo "<td>$value->PERSONA_CONTACTO</td>";
-                                    echo "<td>$value->EMAIL</td>";
-                                    echo "<td>$value->DIRECCION</td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                    <div class="box-body ">
+                        <div id="tablaProveedor">
+
+
+                        </div>
                     </div>
                 </div>
 
@@ -49,99 +25,56 @@
 
     </section>
 </div>
+<div class="modal fade" id="ModalUsuario" style="display: none;">
 
-<div class="modal fade" id="modalNuevoCliente" role="dialog">
-    <div class="modal-dialog" >
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Agregar Nuevo Proveedor</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" id="guardarNuevoCliente">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="tipoDocumento" class="col-sm-4 control-label">Tipo de Documento</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="tipoDocumento" name="tipoDocumento" >
-                                    <option value="">Tipo de Documento</option>
-                                    <?php
-                                    foreach ($tipoDocumento as $value) {
-                                        echo "<option value='$value->ID_TIPO_DOCUMENTO'>$value->DOCUMENTO</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="numeroDocumento" class="col-sm-4 control-label">Número de Documento</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control solo-numero" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required disabled/>
-                            </div>
-                            <div id="xDocumento" class="hide panel-body text-right"><strong class="text-danger"></strong></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nombres" class="col-sm-4 control-label ">Nombres o Razón Social</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="nombres" name="nombres" placeholder="Nombres o Razón Social" required disabled/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="apellidoPaterno" class="col-sm-4 control-label ">Apellido Paterno</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="apellidoPaterno" name="apellidoPaterno" placeholder="Apellido Paterno" required disabled/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="apellidoMaterno" class="col-sm-4 control-label">Apellido Materno</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="apellidoMaterno" name="apellidoMaterno" placeholder="Apellido Materno" required disabled />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombreContacto" class="col-sm-4 control-label">Nombre de Contacto</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control solo-texto" id="nombreContacto" name="nombreContacto" placeholder="nombreContacto" required disabled />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="celular" class="col-sm-4 control-label">Célular</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control solo-numero" id="celular" name="celular" placeholder="Celular" required disabled/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email" class="col-sm-4 control-label">E-mail</label>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" data-validation="email" required  disabled/>
-                            </div>
-                            <div id="xmail" class="hide panel-body text-right"><strong class="text-danger">Ingresa un email valido</strong></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="direccion" class="col-sm-4 control-label">Dirección</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control texto-limpio" id="direccion" name="direccion" placeholder="Dirección" required disabled/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" id="btnCerrarModal" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" id="btnguardarNuevoCliente" class="btn btn-primary pull-right" disabled>Guardar</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
 </div>
+
+
+
+
 <script>
+    function editar(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url(); ?>contactos/editarProveedor",
+            data: {ID: id},
+            success: function (response) {
+                $('#ModalUsuario').html(response);
+            }
+        });
+
+    }
+    function actualizaTabla() {
+        $.ajax({
+            type: 'post',
+            url: '<?php echo base_url(); ?>contactos/tablaProveedor',
+            success: function (response) {
+                $('#tablaProveedor').html(response);
+            },
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Revise Su Coneccion a Internet';
+                } else if (jqXHR.status === 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status === 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                alert(msg);
+            }
+        });
+    }
+    setInterval(actualizaTabla, 60000);
+    window.addEventListener('load', actualizaTabla, false);
+
 
     $('form').find('input[id=numeroDocumento]').blur(function () {
         if (documentoRegistrado($(this).val(), '#xDocumento') === false) {
@@ -242,7 +175,7 @@
                     $('#guardarNuevoCliente').html('<div class="box-body"><p>El Usuario fue Agregado Satisfactoriamente</p>\n\
                 <button type="button" id="btnCerrarModal" class="btn btn-primary pull-right" data-dismiss="modal">Aceptar</button></div>');
                 }
-                
+
                 $('.close').removeAttr('disabled')
             }
         });

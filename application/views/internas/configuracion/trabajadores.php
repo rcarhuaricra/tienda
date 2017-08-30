@@ -5,19 +5,15 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header pull-right">
-                        <a href="<?php echo base_url();?>configuracion/NuevoTrabajador" class="btn btn-primary"><span class="icon icon-add-user"></span> Nuevo Empleado</a>
+                        <a href="<?php echo base_url(); ?>configuracion/NuevoTrabajador" class="btn btn-primary"><span class="icon icon-add-user"></span> Nuevo Empleado</a>
                     </div>
                     <div class="box-body ">
                         <div id="tablaTrabajadores">
 
-
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
     </section>
 </div>
@@ -72,7 +68,8 @@
                 } else {
                     msg = 'Uncaught Error.\n' + jqXHR.responseText;
                 }
-                alert(msg);
+                swal("Hubo un problema al actualizar Los Datos");
+                console.log(msg);
             }
         });
     }

@@ -8,7 +8,7 @@
                     <div class="box-body box-profile">
                         <div id="load_img">
                             <a class="btn btn-app bg-light-blue-active" href="<?php base_url(); ?>configuracion/trabajadores">                                
-                                <span class="fa fa-user "></span> Trabajadores
+                                <span class="icon icon-users3 fa "></span> Trabajadores
                             </a>
 
                         </div>

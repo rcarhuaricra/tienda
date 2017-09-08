@@ -1,0 +1,24 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30/08/2017, 05:11:30 PM
+    Author     : RICV
+*/
+
+#picture{
+    width: 90px;
+    height: 90px;    
+    border: 4px solid #CCCCCC;
+    color: red;
+    background-color: #cccccc;
+    border-radius: 50%;
+    margin: 0.2em auto;
+    overflow: hidden;
+    
+}
+#picture:hover{
+    border-color: #54AF54;
+}

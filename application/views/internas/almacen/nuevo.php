@@ -1,7 +1,7 @@
 <div class="content-wrapper">
     <?php cabecera(); ?>
     <section class="content">
-        <form class="form-horizontal" id="guardarNuevoProducto" action="<?php echo base_url(); ?>almacen/guardarProductos" method="post">
+        <form class="form-horizontal" id="guardarNuevoProducto" action="<?php echo base_url(); ?>almacen/guardarProductos" method="post" autocomplete="off">
             <div class="box-body">
                 <div class="form-group" title="Digitar Solo Números"  data-toggle="tooltip">
                     <label for="codigoBarra" class="col-sm-4 control-label">Codigo de Barras del Producto</label>
@@ -70,8 +70,8 @@
                 <div class="form-group">
                     <label for="imagen" class="col-sm-4 control-label">Imagenes</label>
                     <div class="col-sm-8">
-                        <input id="inputImage" name="inputImage" type="file" multiple class="file-loading">
-                        <div class="pull-right text-danger text-bold mensaje-alert" id="error-imagen"></div>
+                        <input id="inputImage" name="inputImage" type="file" class="file-loading" >
+                        <div class="pull-right text-danger text-bold mensaje-alert" id="error-image"></div>
                     </div>
                 </div>
             </div>
@@ -81,12 +81,16 @@
             </div>
         </form>
     </section>
+    
 </div>
+<div id="Cargando" class="modal fade"></div>
 <script>
     $('form#guardarNuevoProducto').submit(function (event) {
         event.preventDefault();
         $('#btnguardarNuevoCliente').html("Guardando <i class='fa fa-spinner fa-pulse  fa-fw'></i><span class='sr-only'>Loading...</span>");
         $('#btnguardarNuevoCliente').attr('disabled');
+        $('#Cargando').modal({backdrop: "static"});
+        
         var formData = new FormData($('form#guardarNuevoProducto')[0]);
         $.ajax({
             cache: false,
@@ -110,10 +114,11 @@
                     $("#error-marca").html(d.marca);
                     $("#error-categoria").html(d.categoria);
                     $("#error-descripcion").html(d.descripcion);
-                    $('#btnguardarNuevoCliente').html('guardando');
-                    $('#btnguardarNuevoCliente').removeAttr('disabled');
-                    $('#btnguardarNuevoCliente').html('Guardar');
+                    $("#error-image").html(d.inputImage);
                 }
+                $('#btnguardarNuevoCliente').removeAttr('disabled');
+                $('#btnguardarNuevoCliente').html('Guardar');
+                $("#Cargando").modal("hide");
             },
             error: function (jqXHR, exception) {
                 var msg = '';
@@ -134,6 +139,9 @@
                 }
                 swal("Hubo un problema al actualizar Los Datos");
                 console.log(msg);
+                $('#btnguardarNuevoCliente').removeAttr('disabled');
+                $('#btnguardarNuevoCliente').html('Guardar');
+                $("#Cargando").modal("hide");
             }
         });
     });
@@ -157,7 +165,7 @@
 
     $("#inputImage").fileinput({
         language: "es",
-        allowedFileExtensions: ["jpg", "png", "gif"]
+        allowedFileExtensions: ["jpg"]
     });
 </script>
 

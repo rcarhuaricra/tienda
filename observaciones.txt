@@ -1,0 +1,47 @@
+tablas remarcadas 
+
+trabajadores: 
+agregar registro de cumpleaños 
+
+clientes:
+campo observacion
+
+proveedor 
+obligado solo ruc 
+agregar campo nacionalidad
+
+ventas:
+precio otro - y validar con una observacion
+ya sea menor precio o precio 0 (regalo)
+
+opcion a poner precio oferta - mostrar precio normal(maycol)
+precio final
+precio por mayor
+precio otros (manualmente)
+cuando sea diferente a los establecidos que figure precio normal y descuento
+
+venta
+opcion producto servicio registrar un detalle detalle
+opcion de tipo de pago 
+	- efectivo
+	- tarjeta credito (+5%)
+	- deposito (codigo de boucher)
+	- tarjeta de devito (+5%)
+	- credito (poner fecha limite)
+venta cerrado****************************************
+
+
+devolucion de producto
+	- observación
+	- rol(vendedor)
+cerrado devolucion*********************
+
+cotizaciones
+guia, proforma, venta (boleta y factura) genere PDF para su impresión
+proforma opcion de enviar por correo envie otro formato pdf
+
+lista de productos con poco o stock 0 con posibilidad a descargar pdf
+codigo de barras nombre produto proveedor  
+
+
+

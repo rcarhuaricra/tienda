@@ -19,8 +19,12 @@
             echo "<td>$value->NOMBRE_PRODUCTO</td>";
             echo "<td class='text-center'>";
             ?>
+        
         <a href="<?php echo base_url() . "recursos/images/product/$value->IMG_PRODUCTO"; ?>" data-lightbox="<?php echo $value->NOMBRE_PRODUCTO;?>" data-title="<?php echo $value->NOMBRE_PRODUCTO;?>">
-            <img src="<?php echo base_url() . "recursos/images/product/thumb/$value->IMG_PRODUCTO"; ?>-thumb.jpg" alt="Product Image" class="img-rounded" width="80">
+            <div id="picture">
+                <img src="<?php echo base_url() . "recursos/images/product/thumb/$value->IMG_PRODUCTO"; ?>" class="img-rounded" width="90">
+            </div>
+            
         </a>
         <?php
         echo "</td>";

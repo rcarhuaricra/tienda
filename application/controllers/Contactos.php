@@ -131,6 +131,7 @@ class Contactos extends CI_Controller {
                 $dato[11] = ""; //PERSONA_CONTACTO
                 $dato[12] = strtoupper($this->input->post('rol')); //TIPO_PERSONA
                 $dato[13] = $_SESSION['id']; //USERREG
+                $dato[14] = ""; //USERREG
                 if ($this->configuracion->insertNewUser($dato) == TRUE) {
                     echo "exito";
                 } else {
@@ -155,24 +156,7 @@ class Contactos extends CI_Controller {
         }
     }
 
-    public function guardarCliente() {
-        $datos = $this->input->post();
-        $USER = '';
-        $NOMBRES = strtoupper(trim($datos['nombres']));
-        $APELLIDO_PATERNO = strtoupper(trim($datos['apellidoPaterno']));
-        $APELLIDO_MATERNO = strtoupper(trim($datos['apellidoMaterno']));
-        $ID_TIPO_DOCUMENTO = trim($datos['tipoDocumento']);
-        $NUMERO_DOCUMENTO = trim($datos['numeroDocumento']);
-        $DIRECCION = trim($datos['direccion']);
-        $TELEFONO = trim($datos['celular']);
-        $EMAIL = strtoupper(trim($datos['email']));
-        $ID_TIPO_PERSONA = CLIENTE;
-        $USER_REG = $_SESSION['user'];
-        $sql = "CALL insertPersona('$USER','$NOMBRES','$APELLIDO_PATERNO','$APELLIDO_MATERNO',$ID_TIPO_DOCUMENTO,'$NUMERO_DOCUMENTO','$DIRECCION','$TELEFONO','$EMAIL','','',$ID_TIPO_PERSONA,'$USER_REG')";
-        $query = $this->db->query($sql);
-        echo $query;
-    }
-
+ 
     public function validarDocumento() {
         $tipopersona = CLIENTE;
         $documento = $this->input->post('documento');
@@ -292,6 +276,7 @@ class Contactos extends CI_Controller {
                 $dato[11] = strtoupper($this->input->post('PersonaContacto')); //PERSONA_CONTACTO
                 $dato[12] = strtoupper($this->input->post('rol')); //TIPO_PERSONA
                 $dato[13] = $_SESSION['id']; //USERREG
+                $dato[14] = ""; //USERREG
                 if ($this->configuracion->insertNewUser($dato) == TRUE) {
                     echo "exito";
                 } else {
@@ -315,23 +300,5 @@ class Contactos extends CI_Controller {
         }
     }
 
-    public function guardarProveedor() {
-        $datos = $this->input->post();
-        $USER = '';
-        $NOMBRES = strtoupper(trim($datos['nombres']));
-        $APELLIDO_PATERNO = strtoupper(trim($datos['apellidoPaterno']));
-        $APELLIDO_MATERNO = strtoupper(trim($datos['apellidoMaterno']));
-        $NOMBRE_CONTACTO = strtoupper(trim($datos['nombreContacto']));
-        $ID_TIPO_DOCUMENTO = trim($datos['tipoDocumento']);
-        $NUMERO_DOCUMENTO = trim($datos['numeroDocumento']);
-        $DIRECCION = trim($datos['direccion']);
-        $TELEFONO = trim($datos['celular']);
-        $EMAIL = strtoupper(trim($datos['email']));
-        $ID_TIPO_PERSONA = PROVEEDOR;
-        $USER_REG = $_SESSION['user'];
-        $sql = "CALL insertPersona('$USER','$NOMBRES','$APELLIDO_PATERNO','$APELLIDO_MATERNO',$ID_TIPO_DOCUMENTO,'$NUMERO_DOCUMENTO','$DIRECCION','$TELEFONO','$EMAIL','','$NOMBRE_CONTACTO',$ID_TIPO_PERSONA,'$USER_REG')";
-        $query = $this->db->query($sql);
-        echo $query;
-    }
-
+   
 }

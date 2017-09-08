@@ -61,6 +61,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="cumpleanos" class="col-sm-5 control-label">Cumpleaños</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control datepicker" id="cumpleanos" name="cumpleanos" placeholder="AAAA-MM-DD"  >
+                                            <div class="pull-right text-danger text-bold mensaje-alert" id="error-cumpleanos"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="user_group_id" class="col-sm-5 control-label">E-mail</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" id="email" name="email" placeholder="example@gmail.com" >                        
@@ -83,14 +90,14 @@
                                     <div class="form-group">
                                         <label for="clave" class="col-sm-5 control-label">Password</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="clave" name="clave" placeholder="Ingrese Password"  >
+                                            <input type="password" class="form-control" id="clave" name="clave" placeholder="Ingrese Password"  >
                                             <div class="pull-right text-danger text-bold mensaje-alert" id="error-clave"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="confirmarClave" class="col-sm-5 control-label">Confirmar Password</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="confirmarClave" name="confirmarClave" placeholder="Confirme Password"  >
+                                            <input type="password" class="form-control" id="confirmarClave" name="confirmarClave" placeholder="Confirme Password"  >
                                             <div class="pull-right text-danger text-bold mensaje-alert" id="error-confirmarClave"></div>
                                         </div>
                                     </div>
@@ -115,6 +122,11 @@
 
 </div>
 <script>
+    $('.datepicker').datepicker({
+        language: 'es',
+        format: 'yyyy-mm-dd'
+
+    });
     $('form#newTrabajador').submit(function (event) {
         event.preventDefault();
         var formData = new FormData($('form#newTrabajador')[0]);
@@ -150,6 +162,7 @@
                     $("form#newTrabajador #error-telefono").html(d.telefono);
                     $("form#newTrabajador #error-tipoDocumento").html(d.tipoDocumento);
                     $("form#newTrabajador #error-numeroDoc").html(d.numeroDoc);
+                    $("form#newTrabajador #error-cumpleanos").html(d.cumpleanos);
                     $("form#newTrabajador #error-email").html(d.email);
                     $("form#newTrabajador #error-rol").html(d.rol);
                     $("form#newTrabajador #error-estado").html(d.estado);

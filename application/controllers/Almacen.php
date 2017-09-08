@@ -36,15 +36,91 @@ class Almacen extends CI_Controller {
         $this->load->view('internas/almacen/tablaProductos', $datos);
     }
 
-    public function guardarProductos() {
+    public function actualizarProducto() {
         if ($this->input->is_ajax_request()) {
             $this->form_validation->set_error_delimiters('<spam>', '</spam>');
-            $this->form_validation->set_rules('codigoBarra', 'Codigo de Barras', 'required');
+            $this->form_validation->set_rules('codigoBarra', 'Codigo de Barras', 'required|min_length[13]');
             $this->form_validation->set_rules('producto', 'Producto', 'required');
             $this->form_validation->set_rules('marca', 'Marca', 'required');
             $this->form_validation->set_rules('categoria', 'Categoria', 'required');
             $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
             //$this->form_validation->set_rules('inputimage', 'Imagen', 'required');
+            if (empty($_FILES['inputImage']['name'])) {
+                $this->form_validation->set_rules('inputimage', 'Imagen', 'required');
+            }
+            if ($this->form_validation->run() == TRUE) {
+
+                $config['maxsize'] = 2000;
+                $config['quality'] = '100%';
+                $config['upload_path'] = "./recursos/images/product/";
+                $config['allowed_types'] = "jpg";
+                $config['file_name'] = $this->input->post('codigoBarra');
+                $this->load->library("upload", $config);
+                $archivo = "./recursos/images/product/" . $this->input->post('codigoBarra') . ".jpg";
+                if (file_exists($archivo)) {
+                    unlink("./recursos/images/product/" . $this->input->post('codigoBarra') . ".jpg");
+                }
+                if ($this->upload->do_upload("inputImage")) {
+                    // $this->reducirImagen($this->input->post('codigoBarra'));
+                    $this->ReemplazarMiniatura($this->input->post('codigoBarra'));
+                    $data = array("upload_data" => $this->upload->data());
+                    $dato[1] = $this->input->post('codigoBarra');
+                    $dato[2] = $this->input->post('producto');
+                    $dato[3] = $this->input->post('marca');
+                    $dato[4] = $this->input->post('categoria');
+                    $dato[5] = $this->input->post('descripcion');
+                    $dato[6] = $data['upload_data']['file_name'];
+                    $dato[7] = $_SESSION['id'];
+                    if ($this->almacen->UpdateProducto($dato) == TRUE) {
+                        echo "exito";
+                    } else {
+                        echo "error";
+                    }
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            } else {
+                $data['codigoBarra'] = form_error('codigoBarra');
+                $data['producto'] = form_error('producto');
+                $data['marca'] = form_error('marca');
+                $data['categoria'] = form_error('categoria');
+                $data['descripcion'] = form_error('descripcion');
+                $data['inputimage'] = form_error('inputimage');
+                echo json_encode($data);
+            }
+        } else {
+            show_404();
+        }
+    }
+
+    private function ReemplazarMiniatura($codigoBarras) {
+        if (file_exists("./recursos/images/product/thumb/" . $codigoBarras . ".jpg")) {
+            unlink("./recursos/images/product/thumb/" . $codigoBarras . ".jpg");
+        }
+
+        $config3['source_image'] = "./recursos/images/product/$codigoBarras.jpg";
+        $config3['width'] = 100;
+        $config3['height'] = 150;
+        $config3['maintain_ratio'] = TRUE;
+        $config3['new_image'] = "./recursos/images/product/thumb/$codigoBarras.jpg";
+        $this->load->library('image_lib', $config3);
+        if (!$this->image_lib->resize()) {
+            echo $this->image_lib->display_errors();
+        }
+    }
+
+    public function guardarProductos() {
+        if ($this->input->is_ajax_request()) {
+            $this->form_validation->set_error_delimiters('<spam>', '</spam>');
+            $this->form_validation->set_rules('codigoBarra', 'Codigo de Barras', 'required|min_length[13]');
+            $this->form_validation->set_rules('producto', 'Producto', 'required');
+            $this->form_validation->set_rules('marca', 'Marca', 'required');
+            $this->form_validation->set_rules('categoria', 'Categoria', 'required');
+            $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
+            //$this->form_validation->set_rules('inputimage', 'Imagen', 'required');
+              if (empty($_FILES['inputImage']['name'])) {
+                $this->form_validation->set_rules('inputImage', 'Imagen', 'required');
+            }
             $this->form_validation->set_message('codigoBarra', 'el campo codigo de barras es requerido');
             if ($this->form_validation->run() == TRUE) {
                 $config['maxsize'] = 2000;
@@ -55,7 +131,7 @@ class Almacen extends CI_Controller {
                 $this->load->library("upload", $config);
 
                 if ($this->upload->do_upload("inputImage")) {
-                   // $this->reducirImagen($this->input->post('codigoBarra'));
+                    // $this->reducirImagen($this->input->post('codigoBarra'));
                     $this->CrearMiniatura($this->input->post('codigoBarra'));
                     $data = array("upload_data" => $this->upload->data());
                     $dato[1] = $this->input->post('codigoBarra');
@@ -79,7 +155,7 @@ class Almacen extends CI_Controller {
                 $data['marca'] = form_error('marca');
                 $data['categoria'] = form_error('categoria');
                 $data['descripcion'] = form_error('descripcion');
-                // $data['inputimage'] = form_error('inputimage');
+                 $data['inputImage'] = form_error('inputImage');
                 echo json_encode($data);
             }
         } else {
@@ -90,30 +166,23 @@ class Almacen extends CI_Controller {
     private function reducirImagen($codigoBarras) {
         $config2['source_image'] = "./recursos/images/product/$codigoBarras.jpg";
         $config2['width'] = 800;
-        $config2['height'] = 600;        
+        $config2['height'] = 600;
         $this->load->library('image_lib', $config2);
         if (!$this->image_lib->resize()) {
             echo $this->image_lib->display_errors();
         }
     }
+
     private function CrearMiniatura($codigoBarras) {
         $config3['source_image'] = "./recursos/images/product/$codigoBarras.jpg";
         $config3['width'] = 100;
         $config3['height'] = 150;
         $config3['maintain_ratio'] = TRUE;
-        $config3['new_image'] = "./recursos/images/product/thumb/$codigoBarras-thumb.jpg";
+        $config3['new_image'] = "./recursos/images/product/thumb/$codigoBarras.jpg";
         $this->load->library('image_lib', $config3);
         if (!$this->image_lib->resize()) {
             echo $this->image_lib->display_errors();
         }
-    }
-
-    public function editarProducto() {
-        $idProducto = $this->input->post('ID');
-        $datos['Usuario'] = $this->General_Model->MostrarUsuario($idProducto);
-        $datos['Documento'] = $this->General_Model->listarDocumento_model();
-        $datos['Rol'] = $this->General_Model->ListarRoles_model();
-        $this->load->view('internas/almacen/ModalActualizarProducto', $datos);
     }
 
     public function marcas() {
@@ -141,6 +210,17 @@ class Almacen extends CI_Controller {
         $this->load->view('plantilla/menuderecha');
         $this->load->view('plantilla/footer', $data);
     }
+    public function newCompra() {
+        $data['titulo'] = 'Historial de Compras';
+        $data['iCheck'] = TRUE;
+        $this->load->view('plantilla/header', $data);
+        $this->load->view('plantilla/cabecera');
+        $this->load->view('plantilla/menuizquierda', $data);
+        $this->load->view('internas/almacen/newCompra');
+        $this->load->view('plantilla/piedePagina');
+        $this->load->view('plantilla/menuderecha');
+        $this->load->view('plantilla/footer', $data);
+    }
 
     public function newProductos() {
         $data['titulo'] = 'Panel de Atención';
@@ -157,6 +237,18 @@ class Almacen extends CI_Controller {
         $this->load->view('plantilla/piedePagina');
         //$this->load->view('plantilla/menuderecha');
         $this->load->view('plantilla/footer', $data);
+    }
+
+    public function editarProducto() {
+        $idProducto = $this->input->post('ID');
+        $datos['Usuario'] = $this->General_Model->MostrarUsuario($idProducto);
+        $datos['Documento'] = $this->General_Model->listarDocumento_model();
+        $datos['Rol'] = $this->General_Model->ListarRoles_model();
+
+        $datos['producto'] = $this->almacen->mostrarEditarProducto($idProducto);
+        $datos['marcas'] = $this->almacen->buscaMarcas_model_select();
+        $datos['categorias'] = $this->almacen->buscaCategoria_model_select();
+        $this->load->view('internas/almacen/ModalActualizarProducto', $datos);
     }
 
     public function buscarMarcas() {

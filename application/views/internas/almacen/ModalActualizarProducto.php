@@ -3,22 +3,21 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Editar Usuario</h4>
+            <h4 class="modal-title">Editar Producto con Codigo de Barras: <strong><?php echo $producto->CODIGO_BARRAS; ?></strong></h4>
         </div>
-       <form class="form-horizontal" id="guardarNuevoProducto" action="<?php echo base_url(); ?>almacen/guardarProductos" method="post">
+        <form class="form-horizontal" id="actualizarProducto" action="<?php echo base_url(); ?>almacen/actualizarProducto" method="post">
             <div class="box-body">
-                <div class="form-group" title="Digitar Solo Números"  data-toggle="tooltip">
-                    <label for="codigoBarra" class="col-sm-4 control-label">Codigo de Barras del Producto</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control solo-numero" id="codigoBarra" name="codigoBarra" maxlength="13"
-                               placeholder="Codigo de Barras del Producto" />
-                        <div class="pull-right text-danger text-bold mensaje-alert" id="error-codigoBarra"></div>
-                    </div>
+                <div class="form-group " title="Digitar Solo Números"  data-toggle="tooltip">
+
+                    <input type="hidden" class="form-control solo-numero" id="codigoBarra" name="codigoBarra" maxlength="13"
+                           placeholder="Codigo de Barras del Producto" value="<?php echo $producto->CODIGO_BARRAS; ?>"/>
+                    <div class="pull-right text-danger text-bold mensaje-alert" id="error-codigoBarra"></div>
                 </div>
                 <div class="form-group">
                     <label for="producto" class="col-sm-4 control-label">Nombre del Producto</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control texto-limpio" id="producto" name="producto" placeholder="Ingrese Nombre del Producto"  />
+                        <input type="text" class="form-control texto-limpio" id="producto" name="producto" placeholder="Ingrese Nombre del Producto" 
+                               value="<?php echo $producto->NOMBRE_PRODUCTO; ?>"/>
                         <div class="pull-right text-danger text-bold mensaje-alert" id="error-producto"></div>
                     </div>
                 </div>
@@ -30,7 +29,11 @@
                                 <option value="">[Seleccione una Marca]</option>
                                 <?php
                                 foreach ($marcas as $value) {
-                                    echo "<option value='$value->ID_MARCA'> $value->NOMBRE_MARCA</option>";
+                                    if ($value->ID_MARCA == $producto->ID_MARCA) {
+                                        echo "<option selected value='$value->ID_MARCA'> $value->NOMBRE_MARCA</option>";
+                                    } else {
+                                        echo "<option value='$value->ID_MARCA'> $value->NOMBRE_MARCA</option>";
+                                    }
                                 }
                                 ?>
                             </select>
@@ -51,7 +54,11 @@
                                 <option value="">[Seleccione una Marca]</option>
                                 <?php
                                 foreach ($categorias as $value) {
-                                    echo "<option value='$value->ID_CATEGORIA_PRODUCTO'> $value->NOMBRE_CATEGORIA_PRODUCTO</option>";
+                                    if ($value->ID_CATEGORIA_PRODUCTO == $producto->ID_CATEGORIA_PRODUCTO) {
+                                        echo "<option selected value='$value->ID_CATEGORIA_PRODUCTO'> $value->NOMBRE_CATEGORIA_PRODUCTO</option>";
+                                    } else {
+                                        echo "<option value='$value->ID_CATEGORIA_PRODUCTO'> $value->NOMBRE_CATEGORIA_PRODUCTO</option>";
+                                    }
                                 }
                                 ?>
                             </select>
@@ -67,15 +74,15 @@
                 <div class="form-group">
                     <label for="descripcion" class="col-sm-4 control-label ">Descripción</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control texto-limpio" id="descripcion" name="descripcion" placeholder="Ingrese Descripción" ></textarea>
+                        <textarea class="form-control texto-limpio" id="descripcion" name="descripcion" placeholder="Ingrese Descripción" ><?php echo $producto->DESCRIPCION_PRODUCTO; ?></textarea>
                         <div class="pull-right text-danger text-bold mensaje-alert" id="error-descripcion"></div>
                     </div>
                 </div>                              
                 <div class="form-group">
                     <label for="imagen" class="col-sm-4 control-label">Imagenes</label>
                     <div class="col-sm-8">
-                        <input id="inputImage" name="inputImage" type="file" multiple class="file-loading">
-                        <div class="pull-right text-danger text-bold mensaje-alert" id="error-imagen"></div>
+                        <input id="inputImage" name="inputImage" type="file" class="file-loading" >
+                        <div class="pull-right text-danger text-bold mensaje-alert" id="error-inputimage"></div>
                     </div>
                 </div>
             </div>
@@ -89,24 +96,24 @@
 </div>
 <script>
     $("#inputImage").fileinput({
-        language: "es",        
-        allowedFileExtensions: ["jpg", "png", "gif"]
+        language: "es",
+        allowedFileExtensions: ["jpg"]
     });
     $("#ModalUsuario").on('hidden.bs.modal', function () {
         actualizaTabla();
     });
-    $('form#updateTrabajador').submit(function (event) {
+    $('form#actualizarProducto').submit(function (event) {
         event.preventDefault();
-        var formData = new FormData($('form#updateTrabajador')[0]);
+        var formData = new FormData($('form#actualizarProducto')[0]);
         $.ajax({
             cache: false,
-            type: $('form#updateTrabajador').attr('method'),
-            url: $('form#updateTrabajador').attr('action'),
+            type: $('form#actualizarProducto').attr('method'),
+            url: $('form#actualizarProducto').attr('action'),
             data: formData,
             contentType: false,
             processData: false,
             success: function (response) {
-
+                //alert(response);
                 if (response === "exito") {
                     swal({
                         title: "Los Datos del Usuario Fueron Actualizados!",
@@ -123,15 +130,12 @@
                     swal("Hubo un problema al actualizar Los Datos")
                 } else {
                     var d = JSON.parse(response);
-                    $("form#updateTrabajador #error-nombre").html(d.nombre);
-                    $("form#updateTrabajador #error-apePat").html(d.apePat);
-                    $("form#updateTrabajador #error-apeMat").html(d.apeMat);
-                    $("form#updateTrabajador #error-telefono").html(d.telefono);
-                    $("form#updateTrabajador #error-tipoDocumento").html(d.tipoDocumento);
-                    $("form#updateTrabajador #error-numeroDoc").html(d.numeroDoc);
-                    $("form#updateTrabajador #error-email").html(d.email);
-                    $("form#updateTrabajador #error-rol").html(d.rol);
-                    $("form#updateTrabajador #error-estado").html(d.estado);
+                    $("#error-codigoBarra").html(d.codigoBarra);
+                    $("#error-producto").html(d.producto);
+                    $("#error-marca").html(d.marca);
+                    $("#error-categoria").html(d.categoria);
+                    $("#error-descripcion").html(d.descripcion);
+                    $("#error-inputimage").html(d.inputimage);
                 }
             }
         });

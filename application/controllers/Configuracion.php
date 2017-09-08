@@ -167,6 +167,7 @@ class Configuracion extends CI_Controller {
     }
 
     public function NuevoTrabajador() {
+        $data['Date_Picker']=TRUE;
         $data['titulo'] = 'Nuevo Trabajador';
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
@@ -188,6 +189,7 @@ class Configuracion extends CI_Controller {
             $this->form_validation->set_rules('telefono', 'Teléfono', 'trim|required|is_natural_no_zero|min_length[8]|max_length[11]');
             $this->form_validation->set_rules('tipoDocumento', 'Tipo Documento', 'trim|required');
             $this->form_validation->set_rules('numeroDoc', 'Número de Documento', 'trim|required|is_natural_no_zero|min_length[8]|max_length[11]');
+            $this->form_validation->set_rules('cumpleanos', 'Cumpleaños', 'trim|required');
             $this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email');
             $this->form_validation->set_rules('rol', 'Rol', 'trim|required');
             $this->form_validation->set_rules('clave', 'Password', 'trim|required|matches[confirmarClave]|min_length[6]');
@@ -199,6 +201,7 @@ class Configuracion extends CI_Controller {
                 $dato[4] = $this->input->post('apeMat'); //APELLIDO MATERNO
                 $dato[5] = $this->input->post('tipoDocumento'); //ID TIPO DOCUMENTO INT
                 $dato[6] = $this->input->post('numeroDoc'); //NUMERO DE DOCUMENTO
+                
                 $dato[7] = ""; //DIRECCION
                 $dato[8] = $this->input->post('telefono'); //TELEFONO
                 $dato[9] = $this->input->post('email'); //EMAIL
@@ -206,6 +209,7 @@ class Configuracion extends CI_Controller {
                 $dato[11] = ""; //PERSONA_CONTACTO
                 $dato[12] = $this->input->post('rol'); //TIPO_PERSONA
                 $dato[13] = $_SESSION['id']; //USERREG
+                $dato[14] = $this->input->post('cumpleanos'); //NUMERO DE DOCUMENTO
                 if ($this->configuracion->insertNewUser($dato) == TRUE) {
                     echo "exito";
                 } else {
@@ -218,6 +222,7 @@ class Configuracion extends CI_Controller {
                 $data['telefono'] = form_error('telefono');
                 $data['tipoDocumento'] = form_error('tipoDocumento');
                 $data['numeroDoc'] = form_error('numeroDoc');
+                $data['cumpleanos'] = form_error('cumpleanos');
                 $data['email'] = form_error('email');
                 $data['rol'] = form_error('rol');
                 $data['clave'] = form_error('clave');

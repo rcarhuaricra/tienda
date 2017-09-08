@@ -38,7 +38,7 @@ class Configuracion_model extends CI_Model {
         }
     }
     public function insertNewUser($dato) {
-        $sql = "CALL insertPersona('$dato[1]','$dato[2]','$dato[3]','$dato[4]',$dato[5],'$dato[6]','$dato[7]','$dato[8]','$dato[9]','$dato[10]','$dato[11]','$dato[12]','$dato[13]')";
+        $sql = "CALL insertPersona('$dato[1]','$dato[2]','$dato[3]','$dato[4]',$dato[5],'$dato[6]','$dato[7]','$dato[8]','$dato[9]','$dato[10]','$dato[11]','$dato[12]','$dato[13]','$dato[14]')";
         $this->db->query($sql);
         if ($this->db->affected_rows() > 0) {
             return TRUE;

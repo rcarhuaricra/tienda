@@ -7,7 +7,8 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>recursos/bootstrap/css/bootstrap.min.css">
+        <link href="<?php echo base_url(); ?>recursos/styleTienda.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link href="<?php echo base_url(); ?>recursos/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <!-- Ionicons -->
@@ -16,6 +17,8 @@
         <link href="<?php echo base_url(); ?>recursos/fonts/icomoon/icomoon/style.css" rel="stylesheet" type="text/css"/>
         <!-- IcoFonts -->
         <link href="<?php echo base_url(); ?>recursos/fonts/icofont/css/icofont.css" rel="stylesheet" type="text/css"/>
+        <!-- select 2 - buscador en select -->
+        <link href="<?php echo base_url(); ?>recursos/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
         <!-- Theme style -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -24,7 +27,7 @@
         <!-- jQuery 2.2.3 -->
         <script src="<?php echo base_url(); ?>recursos/plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
-        
+
         <?php
         if (isset($iCheck)) {
             ?>
@@ -49,6 +52,9 @@
             ?>
             <!-- Date_Picker -->
             <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/plugins/datepicker/datepicker3.css">
+
+            <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+            <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/locales/bootstrap-datepicker.es.js" type="text/javascript"></script>
             <?php
         }
         if (isset($Daterange_picker)) {
@@ -60,7 +66,7 @@
         if (isset($bootstrap_wysihtml5)) {
             ?>
             <!-- bootstrap_wysihtml5 - text editor -->
-            <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+            <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5m.in.css">
             <?php
         }
         if (isset($fileInput)) {
@@ -74,6 +80,12 @@
         }
         ?>
 
+        <!-- select 2 - buscador en un select-->
+
+
+        <script src="<?php echo base_url(); ?>recursos/plugins/select2/select2.full.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>recursos/plugins/select2/i18n/es.js" type="text/javascript"></script>
+
         <!-- LightBOx - MostrarImagenes-->
         <link href="<?php echo base_url(); ?>recursos/plugins/lightbox2-master/src/css/lightbox.css" rel="stylesheet" type="text/css"/>
         <script src="<?php echo base_url(); ?>recursos/plugins/lightbox2-master/src/js/lightbox.js" type="text/javascript"></script>
@@ -83,10 +95,10 @@
         <script src="<?php echo base_url(); ?>recursos/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="<?php echo base_url(); ?>recursos/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
         <link href="<?php echo base_url(); ?>recursos/plugins/datatables/jquery.dataTables_themeroller.css" rel="stylesheet" type="text/css"/>
-        
+
         <link href="<?php echo base_url(); ?>recursos/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css" rel="stylesheet" type="text/css"/>
         <script src="<?php echo base_url(); ?>recursos/plugins/datatables/extensions/Responsive/js/dataTables.responsive.js" type="text/javascript"></script>
-         <!-- sweetalert - alert con stylo-->
+        <!-- sweetalert - alert con stylo-->
         <link href="<?php echo base_url(); ?>recursos/plugins/sweetalert-master/dist/sweetalert.css" rel="stylesheet" type="text/css"/>
         <script src="<?php echo base_url(); ?>recursos/plugins/sweetalert-master/dist/sweetalert.min.js" type="text/javascript"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

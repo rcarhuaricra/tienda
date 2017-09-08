@@ -29,10 +29,11 @@
                                         <label for="tipoDocumento" class="col-sm-5 control-label">Tipo de Documento</label>
                                         <div class="col-sm-6">                         
                                             <select id="tipoDocumento" name='tipoDocumento' class="form-control"> 
+                                                <option value="2">RUC</option>
                                                 <?php
-                                                foreach ($Documento as $row) {
+                                                /*foreach ($Documento as $row) {
                                                     echo "<option value='$row->ID_TIPO_DOCUMENTO'>$row->DOCUMENTO</option>";
-                                                }
+                                                }*/
                                                 ?>
                                             </select>
                                             <div class="pull-right text-danger text-bold mensaje-alert" id="error-tipoDocumento"></div>
@@ -55,7 +56,7 @@
                                     <div class="form-group">
                                         <label for="PersonaContacto" class="col-sm-5 control-label">Datos de Contacto</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="PersonaContacto" name="PersonaContacto" placeholder="Ingrese Datos de Contacto" >                        
+                                            <textarea type="text" class="form-control" id="PersonaContacto" name="PersonaContacto" placeholder="Ingrese Datos de Contacto" ></textarea> 
                                             <div class="pull-right text-danger text-bold mensaje-alert" id="error-PersonaContacto"></div>
                                         </div>
                                     </div>
@@ -108,7 +109,7 @@
             contentType: false,
             processData: false,
             success: function (response) {
-                //alert(response);
+                alert(response);
                 if (response === "exito") {
                     swal({
                         title: "Los Datos del Nuevo Proveedor Fueron Registrados!",

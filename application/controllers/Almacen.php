@@ -14,28 +14,6 @@ class Almacen extends CI_Controller {
         $this->load->model("Almacen_model", "almacen");
     }
 
-    public function productos() {
-        //echo $this->GUID();
-        $data['titulo'] = 'Panel de Atención';
-        $data['iCheck'] = TRUE;
-        $data['fileInput'] = TRUE;
-        $this->load->view('plantilla/header', $data);
-        $this->load->view('plantilla/cabecera');
-        $this->load->view('plantilla/menuizquierda', $data);
-        //$datos['marcas'] = $this->almacen->buscaMarcas_model_select();
-        //$datos['categorias'] = $this->almacen->buscaCategoria_model_select();
-        $this->load->view('internas/almacen/producto');
-        $this->load->view('internas/almacen/modales');
-        $this->load->view('plantilla/piedePagina');
-        //$this->load->view('plantilla/menuderecha');
-        $this->load->view('plantilla/footer', $data);
-    }
-
-    public function tablaProductos() {
-        $datos['Productos'] = $this->General_Model->ListarProductos_model();
-        $this->load->view('internas/almacen/tablaProductos', $datos);
-    }
-
     public function actualizarProducto() {
         if ($this->input->is_ajax_request()) {
             $this->form_validation->set_error_delimiters('<spam>', '</spam>');
@@ -48,6 +26,10 @@ class Almacen extends CI_Controller {
             if (empty($_FILES['inputImage']['name'])) {
                 $this->form_validation->set_rules('inputimage', 'Imagen', 'required');
             }
+            $archivo = "./recursos/images/product/" . $this->input->post('codigoBarra') . ".jpg";
+            if (file_exists($archivo)) {
+                unlink("./recursos/images/product/" . $this->input->post('codigoBarra') . ".jpg");
+            }
             if ($this->form_validation->run() == TRUE) {
 
                 $config['maxsize'] = 2000;
@@ -56,10 +38,7 @@ class Almacen extends CI_Controller {
                 $config['allowed_types'] = "jpg";
                 $config['file_name'] = $this->input->post('codigoBarra');
                 $this->load->library("upload", $config);
-                $archivo = "./recursos/images/product/" . $this->input->post('codigoBarra') . ".jpg";
-                if (file_exists($archivo)) {
-                    unlink("./recursos/images/product/" . $this->input->post('codigoBarra') . ".jpg");
-                }
+
                 if ($this->upload->do_upload("inputImage")) {
                     // $this->reducirImagen($this->input->post('codigoBarra'));
                     $this->ReemplazarMiniatura($this->input->post('codigoBarra'));
@@ -70,7 +49,7 @@ class Almacen extends CI_Controller {
                     $dato[4] = $this->input->post('categoria');
                     $dato[5] = $this->input->post('descripcion');
                     $dato[6] = $data['upload_data']['file_name'];
-                    $dato[7] = $_SESSION['id'];
+                    $dato[7] = $_SESSION['user'];
                     if ($this->almacen->UpdateProducto($dato) == TRUE) {
                         echo "exito";
                     } else {
@@ -118,7 +97,7 @@ class Almacen extends CI_Controller {
             $this->form_validation->set_rules('categoria', 'Categoria', 'required');
             $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
             //$this->form_validation->set_rules('inputimage', 'Imagen', 'required');
-              if (empty($_FILES['inputImage']['name'])) {
+            if (empty($_FILES['inputImage']['name'])) {
                 $this->form_validation->set_rules('inputImage', 'Imagen', 'required');
             }
             $this->form_validation->set_message('codigoBarra', 'el campo codigo de barras es requerido');
@@ -140,7 +119,7 @@ class Almacen extends CI_Controller {
                     $dato[4] = $this->input->post('categoria');
                     $dato[5] = $this->input->post('descripcion');
                     $dato[6] = $data['upload_data']['file_name'];
-                    $dato[7] = $_SESSION['id'];
+                    $dato[7] = $_SESSION['user'];
                     if ($this->almacen->guardarProducto($dato) == TRUE) {
                         echo "exito";
                     } else {
@@ -155,7 +134,7 @@ class Almacen extends CI_Controller {
                 $data['marca'] = form_error('marca');
                 $data['categoria'] = form_error('categoria');
                 $data['descripcion'] = form_error('descripcion');
-                 $data['inputImage'] = form_error('inputImage');
+                $data['inputImage'] = form_error('inputImage');
                 echo json_encode($data);
             }
         } else {
@@ -185,42 +164,130 @@ class Almacen extends CI_Controller {
         }
     }
 
+    public function productos() {
+        //echo $this->GUID();
+        $data['titulo'] = 'Panel de Atención';
+        $data['iCheck'] = TRUE;
+        $data['fileInput'] = TRUE;
+        $this->load->view('plantilla/header', $data);
+        $this->load->view('plantilla/cabecera');
+        $this->load->view('plantilla/menuizquierda', $data);
+
+        $this->load->view('internas/almacen/producto');
+
+
+        $this->load->view('plantilla/piedePagina');
+        $this->load->view('plantilla/footer', $data);
+    }
+
+    public function tablaProductos() {
+        $datos['Productos'] = $this->General_Model->ListarProductos_model();
+        $this->load->view('internas/almacen/tablaProductos', $datos);
+    }
+
     public function marcas() {
         $data['titulo'] = 'Historial de COmpras';
         $data['iCheck'] = TRUE;
         $this->load->view('plantilla/header', $data);
         $this->load->view('plantilla/cabecera');
         $this->load->view('plantilla/menuizquierda', $data);
-        $datos['Marcas'] = $this->General_Model->ListarMarcas_model();
-        $this->load->view('internas/almacen/marcas', $datos);
-        $this->load->view('internas/almacen/modales');
+
+        $this->load->view('internas/almacen/marcas');
         $this->load->view('plantilla/piedePagina');
-        $this->load->view('plantilla/menuderecha');
         $this->load->view('plantilla/footer', $data);
     }
 
-    public function historial() {
-        $data['titulo'] = 'Historial de Compras';
-        $data['iCheck'] = TRUE;
-        $this->load->view('plantilla/header', $data);
-        $this->load->view('plantilla/cabecera');
-        $this->load->view('plantilla/menuizquierda', $data);
-        $this->load->view('internas/almacen/historial');
-        $this->load->view('plantilla/piedePagina');
-        $this->load->view('plantilla/menuderecha');
-        $this->load->view('plantilla/footer', $data);
+    public function Marca_action() {
+        $this->load->model("JsonMarcas_model");
+        if ($_POST["action"] == "Agregar") {
+            $marcas = htmlspecialchars(strtoupper($this->input->post('txtMarca')), ENT_QUOTES, 'UTF-8');
+            $id_marca = $this->GUID();
+            echo $this->JsonMarcas_model->guardarMarca_model($marcas, $id_marca);
+        }
+        if ($_POST["action"] == "Edit") {
+            $id_marca = $this->input->post('id_marca');
+            $marcas = htmlspecialchars(strtoupper($this->input->post('txtMarca')), ENT_QUOTES, 'UTF-8');
+            echo $this->JsonMarcas_model->UpdateMarca($marcas, $id_marca);
+        }
     }
-    public function newCompra() {
-        $data['titulo'] = 'Historial de Compras';
-        $data['iCheck'] = TRUE;
-        $this->load->view('plantilla/header', $data);
-        $this->load->view('plantilla/cabecera');
-        $this->load->view('plantilla/menuizquierda', $data);
-        $this->load->view('internas/almacen/newCompra');
-        $this->load->view('plantilla/piedePagina');
-        $this->load->view('plantilla/menuderecha');
-        $this->load->view('plantilla/footer', $data);
+
+    public function MuestraMarca() {
+        $output = array();
+        $this->load->model("JsonMarcas_model");
+        $data = $this->JsonMarcas_model->MostrarMarcasUpdate($_POST["id_marca"]);
+        $output['ID_MARCA'] = $data->ID_MARCA;
+        $output['NOMBRE_MARCA'] = htmlspecialchars_decode($data->NOMBRE_MARCA, ENT_QUOTES);
+        echo json_encode($output);
     }
+
+    public function MuestraProducto() {
+        $output = array();
+        $this->load->model("JsonProductos_model");
+        $data = $this->JsonProductos_model->MostrarProductosUpdate($_POST["id_Producto"]);
+        $output['ID_PRODUCTO'] = $data->ID_PRODUCTO;
+        $nombreProducto = htmlspecialchars_decode($data->NOMBRE_PRODUCTO, ENT_QUOTES);
+        $output['NOMBRE_PRODUCTO'] = $nombreProducto;
+        $output['CODIGO_BARRAS'] = $data->CODIGO_BARRAS;
+        $output['DESCRIPCION_PRODUCTO'] = htmlspecialchars_decode($data->DESCRIPCION_PRODUCTO, ENT_QUOTES);
+        $output['NOMBRE_MARCA'] = $data->NOMBRE_MARCA;
+        $output['NOMBRE_CATEGORIA_PRODUCTO'] = $data->NOMBRE_CATEGORIA_PRODUCTO;
+        $direcctorioFoto = base_url() . "recursos/images/product/";
+        $direcctorioMiniatura = base_url() . "recursos/images/product/thumb/";
+        $output['IMG_PRODUCTO'] = "<a href='$direcctorioFoto/$data->IMG_PRODUCTO' data-lightbox='$nombreProducto' data-title='$nombreProducto'><div id='picture'><img src='$direcctorioMiniatura/$data->IMG_PRODUCTO'  class='img-rounded' width='90'></div></a>";
+        echo json_encode($output);
+    }
+
+    public function jsonMarcas() {
+        $this->load->model("JsonMarcas_model");
+        $fetch_data = $this->JsonMarcas_model->MostrarMarcasTabla();
+        $data = array();
+        foreach ($fetch_data as $row) {
+            $sub_array = array();
+            $sub_array[] = htmlspecialchars_decode($row->NOMBRE_MARCA, ENT_QUOTES);
+            $sub_array[] = $row->USER;
+            $sub_array[] = $row->FECHA;
+            $sub_array[] = '<button type="button" name="update" id="' . $row->ID_MARCA . '" class="btn btn-warning btn-xs update"><i class="fa fa-edit"></i> Editar</button>';
+            $data[] = $sub_array;
+        }
+        $output = array(
+            "draw" => intval($_POST["draw"]),
+            "recordsTotal" => $this->JsonMarcas_model->get_all_data(),
+            "recordsFiltered" => $this->JsonMarcas_model->get_filtered_data(),
+            "data" => $data
+        );
+        echo json_encode($output);
+    }
+
+    public function jsonProductos() {
+        $this->load->model("JsonProductos_model");
+        $fetch_data = $this->JsonProductos_model->MostrarProductosTabla();
+        $data = array();
+        foreach ($fetch_data as $row) {
+            $sub_array = array();
+            $sub_array[] = $row->CODIGO_BARRAS;
+            $nombreProducto = htmlspecialchars_decode($row->NOMBRE_PRODUCTO, ENT_QUOTES);
+            $sub_array[] = $nombreProducto;
+            $direcctorioFoto = base_url() . "recursos/images/product/";
+            $direcctorioMiniatura = base_url() . "recursos/images/product/thumb/";
+            $sub_array[] = "<a href='$direcctorioFoto/$row->IMG_PRODUCTO' data-lightbox='$nombreProducto' data-title='$nombreProducto'><div id='picture'><img src='$direcctorioMiniatura/$row->IMG_PRODUCTO'  class='img-rounded' width='90'></div></a>";
+            $sub_array[] = htmlspecialchars_decode($row->DESCRIPCION_PRODUCTO, ENT_QUOTES);
+            $sub_array[] = htmlspecialchars_decode($row->NOMBRE_MARCA, ENT_QUOTES);
+            $sub_array[] = htmlspecialchars_decode($row->NOMBRE_CATEGORIA_PRODUCTO, ENT_QUOTES);
+            $sub_array[] = "<a class='btn btn-success' href='#' data-toggle='modal' data-target='#ModalUsuario' onclick='editar(\"$row->CODIGO_BARRAS\");'><i class='fa fa-edit'></i> Editar</a>";
+            //$sub_array[] = '<button type="button" name="update" id="' . $row->ID_PRODUCTO . '" class="btn btn-warning btn-xs update"><i class="fa fa-edit"></i> Editar</button>';
+            $data[] = $sub_array;
+        }
+        $output = array(
+            "draw" => intval($_POST["draw"]),
+            "recordsTotal" => $this->JsonProductos_model->get_all_data(),
+            "recordsFiltered" => $this->JsonProductos_model->get_filtered_data(),
+            "data" => $data
+        );
+        echo json_encode($output);
+    }
+
+   
+    
 
     public function newProductos() {
         $data['titulo'] = 'Panel de Atención';
@@ -240,7 +307,7 @@ class Almacen extends CI_Controller {
     }
 
     public function editarProducto() {
-        $idProducto = $this->input->post('ID');
+        $idProducto = $this->input->post('id_Producto');
         $datos['Usuario'] = $this->General_Model->MostrarUsuario($idProducto);
         $datos['Documento'] = $this->General_Model->listarDocumento_model();
         $datos['Rol'] = $this->General_Model->ListarRoles_model();
@@ -276,13 +343,6 @@ class Almacen extends CI_Controller {
             $dato[] = $row->CODIGO_BARRAS;
         }
         echo json_encode($dato);
-    }
-
-    public function guardarMarcas() {
-        $marcas = $this->input->post('txtMarca');
-        $id_marca = $this->GUID();
-
-        echo $this->almacen->guardarMarca_model($marcas, $id_marca);
     }
 
     public function guardarCategoria() {

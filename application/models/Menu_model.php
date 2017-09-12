@@ -8,7 +8,7 @@ class Menu_model extends CI_Model {
     }
 
     public function menu() {
-        $sql = "SELECT * FROM `menus` WHERE `parent` is null";
+        $sql = "SELECT * FROM `menus` WHERE `parent` is null ORDER BY id asc";
         $query = $this->db->query($sql);
         return $query->result();
     }

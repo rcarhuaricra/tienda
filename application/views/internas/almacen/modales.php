@@ -1,35 +1,5 @@
 
-<div class="modal fade" id="NuevoMarca" > 
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Agregar Nueva Marca</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" id="guardarMarca">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="txtMarca" class="col-sm-2 control-label">Nombre</label>
-                            <div class="col-sm-10">
-                                <div class="bgcolor">
-                                    <input type="text" name="txtMarca" id="txtMarca" class="form-control typeahead"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="alert alert-dismissible" id="alertMarca" hidden>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary pull-right">Guardar </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
     $(".llamarModal").click(function () {
         ALERT ('AQUI');

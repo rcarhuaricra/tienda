@@ -36,7 +36,10 @@ if (isset($jvectormap)) {
 if (isset($Date_Picker)) {
     ?>
     <!-- datepicker -->
-    <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/bootstrap-datepicker.js"></script>
+
+
+    <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/locales/bootstrap-datepicker.es.js" type="text/javascript"></script>
 
     <?php
 }
@@ -62,8 +65,8 @@ if (isset($dashboard)) {
 if (isset($fileInput)) {
     ?>
     <!-- bootstrap_fileInput - text editor -->
-    
-    
+
+
     <?php
 }
 ?>

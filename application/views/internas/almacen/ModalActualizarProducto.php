@@ -95,6 +95,11 @@
     <!-- /.modal-content -->
 </div>
 <script>
+
+    $("#ModalUsuario").on('hidden.bs.modal', function () {
+        location.reload();
+    });
+
     $("#inputImage").fileinput({
         language: "es",
         allowedFileExtensions: ["jpg"]
@@ -116,16 +121,15 @@
                 //alert(response);
                 if (response === "exito") {
                     swal({
-                        title: "Los Datos del Usuario Fueron Actualizados!",
                         type: "success",
-                        showCancelButton: false,
-                        showConfirmButton: true,
-                        confirmButtonText: "Ok!",
-                        closeOnConfirm: true
-                    },
-                            function () {
-                                $('#ModalUsuario').modal('hide');
-                            });
+                        title: "Los Datos del Usuario Fueron Actualizados!",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    $('form#actualizarProducto')[0].reset();
+
+
                 } else if (response === "error") {
                     swal("Hubo un problema al actualizar Los Datos")
                 } else {

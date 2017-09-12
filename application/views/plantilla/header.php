@@ -51,10 +51,8 @@
         if (isset($Date_Picker)) {
             ?>
             <!-- Date_Picker -->
-            <link rel="stylesheet" href="<?php echo base_url(); ?>recursos/plugins/datepicker/datepicker3.css">
-
-            <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-            <script src="<?php echo base_url(); ?>recursos/plugins/datepicker/locales/bootstrap-datepicker.es.js" type="text/javascript"></script>
+            <link href="<?php echo base_url(); ?>recursos/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+            <link href="<?php echo base_url(); ?>recursos/plugins/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
             <?php
         }
         if (isset($Daterange_picker)) {
@@ -81,9 +79,9 @@
         ?>
 
         <!-- select 2 - buscador en un select-->
+        <script src="<?php echo base_url(); ?>recursos/scriptTienda.js" type="text/javascript"></script>
 
-
-        <script src="<?php echo base_url(); ?>recursos/plugins/select2/select2.full.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>recursos/plugins/select2/select2.js" type="text/javascript"></script>
         <script src="<?php echo base_url(); ?>recursos/plugins/select2/i18n/es.js" type="text/javascript"></script>
 
         <!-- LightBOx - MostrarImagenes-->

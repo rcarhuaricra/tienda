@@ -1,19 +1,12 @@
-
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <?php cabecera(); ?>
-    <!-- Main content -->
     <section class="content">
-        <!-- Small boxes (Stat box) -->
-
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Nueva Compra</h3>
             </div>
             <div class="box-body">
                 <div class="row">
-
                     <div class="col-md-12 col-sm-12">
                         <form method="post" name="new_purchase" id="new_purchase">
                             <div class="box box-info">
@@ -30,7 +23,7 @@
                                                         <option value="" selected="selected">Buscar Proveedor</option>
                                                     </select>
                                                     <span class="input-group-btn">
-                                                        <a href="<?php echo base_url();?>contactos/NuevoProveedor" class="btn btn-default" target="_blank">
+                                                        <a href="<?php echo base_url(); ?>contactos/NuevoProveedor" class="btn btn-default" target="_blank">
                                                             <i class="fa fa-plus"></i> Nuevo Proveedor
                                                         </a>
                                                     </span>
@@ -38,16 +31,16 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Fecha</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control datepicker" name="purchase_date" value="08/09/2017" readonly="">
-                                                    <span class="input-group-btn ">
-                                                        <button class="btn btn-default " type="button"><i class="fa fa-calendar "></i></button>
+                                                <div class="input-group date" id="datetimepicker1">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
+                                                    <input type="text" name="txtfecha" id="txtfecha" readonly class="form-control" placeholder="Ingresar fecha">
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Compra Nº</label>
-                                                <input type="text" class="form-control" name="order_number" id="order_number" required="" value="20214">
+                                                <input type="text" class="form-control" name="order_number" id="order_number" required="">
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Agregar productos</label>
@@ -58,7 +51,8 @@
                                 </div>
                             </div>
 
-                        </form></div>
+                        </form>
+                    </div>
 
                 </div>
                 <div id="resultados_ajax" class="col-md-12" style="margin-top:4px"></div>
@@ -75,15 +69,41 @@
 </div>
 
 <script>
+   
+    $(function () {
+        $('#datetimepicker1').datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn: "linked",
+            language: "es",
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            endDate: '0d'
+        });
+    });
+
     $(document).ready(function () {
+        fechaHoy();
+        $(".datepicker").datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn: "linked",
+            language: "es",
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            endDate: '0d'
+        });
         $(".js-data-example-ajax").select2({
             ajax: {
                 url: "<?php echo base_url() . "json/generarProveedores"; ?>",
                 dataType: 'json',
                 delay: 250,
+                method: "post",
                 data: function (params) {
                     return {
-                        q: params.term, // search term
+                        search: params.term // search term
                     };
                 },
                 processResults: function (data) {

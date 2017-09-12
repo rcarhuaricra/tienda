@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="button" id="btnCerrarModal" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                <a href="<?php echo base_url(); ?>almacen/productos" type="button" class="btn btn-danger pull-left">Volver a Productos</a>
                 <button type="submit" id="btnguardarNuevoCliente" class="btn btn-primary pull-right" >Guardar</button>
             </div>
         </form>

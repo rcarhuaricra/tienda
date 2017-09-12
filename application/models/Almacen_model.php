@@ -61,19 +61,7 @@ class Almacen_model extends CI_Model {
         return $query->result();
     }
 
-    public function guardarMarca_model($marcas, $id_marca) {
-        $sql = "select * from `marca` M where M.`NOMBRE_MARCA` = '$marcas'";
-        $query = $this->db->query($sql);
-        if ($query->num_rows() > 0) {
-            return FALSE;
-        } else {
-            $data = array(
-                'ID_MARCA' => $id_marca,
-                'NOMBRE_MARCA' => $marcas
-            );
-            return $this->db->insert('marca', $data);
-        }
-    }
+    
 
     public function guardarCategoria_model($categoria, $id_categoria) {
         $sql = "select * from `categoria_producto` CP where CP.`NOMBRE_CATEGORIA_PRODUCTO` = '$categoria'";
